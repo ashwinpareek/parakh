@@ -101,6 +101,23 @@ function geminiProvider(key: string): AiProvider {
   };
 }
 
+/** Re-encode large photos so a request stays well under the hosting body limit (about 4.5 MB). */
+async function shrinkImage(b: Blob, maxSide = 1800, maxBytes = 1_200_000): Promise<Blob> {
+  if (b.size <= maxBytes && b.type !== 'image/heic') return b;
+  try {
+    const bmp = await createImageBitmap(b);
+    const k = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+    c.getContext('2d')!.drawImage(bmp, 0, 0, c.width, c.height);
+    for (const q of [0.85, 0.72, 0.6]) {
+      const out = await new Promise<Blob | null>((res) => c.toBlob(res, 'image/jpeg', q));
+      if (out && out.size <= maxBytes) return out;
+    }
+    return await new Promise<Blob>((res, rej) => c.toBlob((o) => (o ? res(o) : rej(new Error('encode'))), 'image/jpeg', 0.5));
+  } catch { return b; }
+}
+
 /** The team's hosted AI (api/ai.js): works for every visitor without an account or key. */
 async function serverProvider(): Promise<AiProvider | null> {
   if (!/^https?:$/.test(location.protocol)) return null;
@@ -114,10 +131,17 @@ async function serverProvider(): Promise<AiProvider | null> {
     if (!info?.ok) return null;
   } catch { return null; }
   const call = async (prompt: string, opts: AiCallOptions, json: boolean) => {
-    const images = await Promise.all((opts.images ?? []).slice(0, 3).map(async (b) => ({ mime: b.type || 'image/jpeg', data: await blobToBase64(b) })));
+    const images = await Promise.all((opts.images ?? []).slice(0, 3).map(async (b) => {
+      const small = await shrinkImage(b);
+      return { mime: small.type || 'image/jpeg', data: await blobToBase64(small) };
+    }));
     const r = await fetch('/api/ai', { method: 'POST', signal: opts.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt, images, json }) })
       .catch((e) => { throw new AiError('network', String(e?.message ?? e)); });
-    if (!r.ok) throw new AiError(r.status === 429 ? 'rate_limited' : 'upstream_error', `AI server returned ${r.status}`);
+    if (!r.ok) {
+      const body = await r.json().catch(() => null) as { error?: string; detail?: string } | null;
+      const code = body?.error ?? (r.status === 413 ? 'too_large' : r.status === 429 ? 'rate_limited' : r.status === 504 ? 'timeout' : 'upstream_error');
+      throw new AiError(code, body?.detail ? `${body.detail}` : `AI server returned ${r.status}`);
+    }
     return String((await r.json())?.text ?? '');
   };
   return {
@@ -159,11 +183,17 @@ export function describeAiError(e: unknown): string {
   switch (code) {
     case 'not_granted': return 'AI access was declined for this page. Rule-based checks still run.';
     case 'rate_limited': return 'The AI service is busy or your usage limit was reached. Try again in a minute.';
-    case 'bad_key': return 'The Gemini API key was rejected. Check it in Settings.';
+    case 'bad_key': return (e as AiError).message?.startsWith('Gemini returned') ? 'The Gemini API key was rejected. Check it in Settings.' : 'The AI key on the server was rejected. Check GEMINI_API_KEY in Vercel.';
     case 'invalid_json': return 'The AI answer could not be read. Try again.';
     case 'images_unavailable': return 'This view cannot send images to the AI.';
     case 'cancelled': return 'Stopped.';
     case 'network': return 'Could not reach the AI service from here.';
-    default: return 'The AI request failed. Try again.';
+    case 'timeout': return 'The AI took too long to answer. Try again.';
+    case 'too_large': return 'That image is too large to send. Try a smaller photo or a PDF.';
+    case 'not_configured': return 'The AI key is not set on the server.';
+    default: {
+      const d = (e as AiError)?.message;
+      return d && !/^AI server returned/.test(d) ? `The AI request failed: ${d.slice(0, 140)}` : 'The AI request failed. Try again.';
+    }
   }
 }

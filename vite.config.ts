@@ -10,8 +10,13 @@ function localApi(env: Record<string, string>): Plugin {
       Object.assign(process.env, env);
       let raw = '';
       for await (const chunk of req) raw += chunk;
-      req.body = raw ? JSON.parse(raw) : undefined;
-      const shim = { status(code: number) { res.statusCode = code; return shim; }, json(v: unknown) { res.setHeader('content-type', 'application/json'); res.end(JSON.stringify(v)); } };
+      try { req.body = raw ? JSON.parse(raw) : undefined; } catch { req.body = undefined; }
+      req.query = Object.fromEntries(new URL(req.originalUrl ?? req.url ?? '/', 'http://x').searchParams);
+      const shim = {
+        status(code: number) { res.statusCode = code; return shim; },
+        setHeader(k: string, v: string) { res.setHeader(k, v); return shim; },
+        json(v: unknown) { res.setHeader('content-type', 'application/json'); res.end(JSON.stringify(v)); },
+      };
       const mod = await import(/* @vite-ignore */ new URL('./api/ai.js', import.meta.url).href);
       await mod.default(req, shim);
     });

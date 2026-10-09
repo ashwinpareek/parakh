@@ -33,7 +33,8 @@ export type Route =
 type Theme = 'light' | 'dark';
 const THEME_KEY = 'parakh.theme.v2';
 const MODE_KEY = 'parakh.mode';
-const ONBOARD_KEY = 'parakh.onboarded.v1';
+// Per visit: every new tab or visit starts with the intro; a refresh inside the same visit does not.
+const ONBOARD_KEY = 'parakh.onboarded.session';
 
 export default function App() {
   const api = useWorkspace();
@@ -44,11 +45,11 @@ export default function App() {
   const [mode, setModeState] = useState<Mode>(() => { try { return (localStorage.getItem(MODE_KEY) as Mode) || 'simple'; } catch { return 'simple'; } });
   const setMode = (m: Mode) => { setModeState(m); try { localStorage.setItem(MODE_KEY, m); } catch { /* storage unavailable */ } };
   const [tour, setTour] = useState<number | null>(null);
-  const [welcome, setWelcome] = useState(() => { try { return localStorage.getItem(ONBOARD_KEY) !== '1'; } catch { return true; } });
+  const [welcome, setWelcome] = useState(() => { try { return sessionStorage.getItem(ONBOARD_KEY) !== '1'; } catch { return true; } });
   const [missionsOpen, setMissionsOpen] = useState(false);
   const [spot, setSpot] = useState<Mission | null>(null);
   const finishWelcome = ({ action, mode: m }: { action: WelcomeAction; mode: Mode }) => {
-    try { localStorage.setItem(ONBOARD_KEY, '1'); } catch { /* storage unavailable */ }
+    try { sessionStorage.setItem(ONBOARD_KEY, '1'); } catch { /* storage unavailable */ }
     setMode(m);
     setWelcome(false);
     go({ view: action === 'workspace' ? 'invoices' : 'overview' });

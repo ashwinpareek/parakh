@@ -217,19 +217,30 @@ export function useWorkspace() {
       completeMission('scan');
       return true;
     } catch (e) {
+      // For the sample scan, keep the demo moving: fall back to the bundled transcription, clearly labelled.
+      if (hasRefFor(inv)) {
+        applyRefFor(inv, `${describeAiError(e)} Showing the bundled transcription of this sample instead.`);
+        flash('AI could not read it just now, so the bundled transcription was used.');
+        return true;
+      }
       flash(describeAiError(e));
       return false;
     } finally { setBusy(null); }
   }, [ai, refreshAi, flash]);
 
-  const applyReference = useCallback((inv: Invoice) => {
+  const hasRefFor = (inv: Invoice) => Object.keys(refs.current ?? {}).some((k) => k.endsWith(inv.source.fileName));
+  const applyRefFor = (inv: Invoice, note: string) => {
     const ref = Object.entries(refs.current).find(([k]) => k.endsWith(inv.source.fileName));
-    if (!ref) { flash('No reference extraction for this file.'); return; }
+    if (!ref) return false;
     const out = fromAi(ref[1] as Parameters<typeof fromAi>[0]);
-    out.extraction = { method: 'reference', confidence: 1, note: 'Reference transcription bundled with the sample, used because no AI provider is connected.' };
+    out.extraction = { method: 'reference', confidence: 1, note };
     replaceInvoice(inv.id, out);
     completeMission('scan');
-  }, [flash]);
+    return true;
+  };
+  const applyReference = useCallback((inv: Invoice) => {
+    if (!applyRefFor(inv, 'Reference transcription bundled with the sample, used because no AI provider is connected.')) flash('No reference extraction for this file.');
+  }, [flash]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const review = useCallback(async (inv: Invoice, findings: Finding[], lang: Lang) => {
     const provider = ai ?? (await refreshAi());
