@@ -127,7 +127,8 @@ export default async function handler(req, res) {
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
 
   if (req.method === 'GET') {
-    if (!req.query?.check) return res.status(200).json({ ok: !!p, provider: p });
+    const check = req.query?.check ?? new URL(req.url ?? '/', 'http://x').searchParams.get('check');
+    if (!check) return res.status(200).json({ ok: !!p, provider: p, v: 2 });
     if (!p) return res.status(200).json({ ok: false, error: 'not_configured', detail: 'No GEMINI_API_KEY or ANTHROPIC_API_KEY set.' });
     if (limited(ip)) return res.status(429).json({ ok: false, error: 'rate_limited' });
     const t0 = Date.now();
