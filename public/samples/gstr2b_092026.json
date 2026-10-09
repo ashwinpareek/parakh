@@ -1,0 +1,745 @@
+{
+ "status": "1",
+ "data": {
+  "chksum": "a91f0c2d6e",
+  "data": {
+   "gstin": "36AAKCS4821M1ZX",
+   "rtnprd": "092026",
+   "version": "1.0",
+   "gendt": "08-10-2026",
+   "docdata": {
+    "b2b": [
+     {
+      "ctin": "36AAHFD7712K1Z9",
+      "trdnm": "DECCAN STEEL TRADERS",
+      "supfildt": "06-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "DST/26-27/0412",
+        "typ": "R",
+        "dt": "03-09-2026",
+        "val": 219014.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 185605.0,
+          "igst": 0.0,
+          "cgst": 16704.45,
+          "sgst": 16704.45,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "DST/26-27/0398",
+        "typ": "R",
+        "dt": "01-09-2026",
+        "val": 113752.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 96400,
+          "igst": 0,
+          "cgst": 8676.0,
+          "sgst": 8676.0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "DST/26-27/0431",
+        "typ": "R",
+        "dt": "19-09-2026",
+        "val": 168445.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 142750,
+          "igst": 0,
+          "cgst": 12847.5,
+          "sgst": 12847.5,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "DST/26-27/0447",
+        "typ": "R",
+        "dt": "28-09-2026",
+        "val": 104076.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 88200,
+          "igst": 0,
+          "cgst": 7938.0,
+          "sgst": 7938.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "27AAFCP3391Q1ZP",
+      "trdnm": "PUNE TOOLCRAFT INDUSTRIES PVT LTD",
+      "supfildt": "05-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "PTI/2627/1187",
+        "typ": "R",
+        "dt": "05-09-2026",
+        "val": 169330.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 143500.0,
+          "igst": 25830.0,
+          "cgst": 0.0,
+          "sgst": 0.0,
+          "cess": 0
+         }
+        ],
+        "srctyp": "e-Invoice",
+        "irn": "9f9cc03b05f30f7641c4f5670b87ad3c7c0b3d4fbb5462b787010d3f51ead82e",
+        "irngendate": "05-09-2026"
+       },
+       {
+        "inum": "PTI/2627/1204",
+        "typ": "R",
+        "dt": "13-09-2026",
+        "val": 76464.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 64800,
+          "igst": 11664.0,
+          "cgst": 0,
+          "sgst": 0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "PTI/2627/1219",
+        "typ": "R",
+        "dt": "26-09-2026",
+        "val": 32332.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 27400,
+          "igst": 4932.0,
+          "cgst": 0,
+          "sgst": 0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36ABDFK5520H1ZH",
+      "trdnm": "KAKATIYA PACKAGING SOLUTIONS",
+      "supfildt": "03-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "KPS/0921",
+        "typ": "R",
+        "dt": "06-09-2026",
+        "val": 109091.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 92450.0,
+          "igst": 16641.0,
+          "cgst": 0.0,
+          "sgst": 0.0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "KPS/0934",
+        "typ": "R",
+        "dt": "23-09-2026",
+        "val": 46728.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 39600,
+          "igst": 0,
+          "cgst": 3564.0,
+          "sgst": 3564.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AGPFG1184C1Z5",
+      "trdnm": "GODAVARI ELECTRICALS",
+      "supfildt": "05-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "GE/1543",
+        "typ": "R",
+        "dt": "08-09-2026",
+        "val": 75072.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 63620.0,
+          "igst": 0.0,
+          "cgst": 5725.8,
+          "sgst": 5725.8,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "GE/1561",
+        "typ": "R",
+        "dt": "26-09-2026",
+        "val": 25252.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 21400,
+          "igst": 0,
+          "cgst": 1926.0,
+          "sgst": 1926.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "33AABCC8834L1ZH",
+      "trdnm": "CHENNAI BEARINGS CO. PVT LTD",
+      "supfildt": "06-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "CBC/INV/7781",
+        "typ": "R",
+        "dt": "12-09-2026",
+        "val": 136880.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 116000.0,
+          "igst": 20880.0,
+          "cgst": 0,
+          "sgst": 0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "CBC/INV/7802",
+        "typ": "R",
+        "dt": "22-09-2026",
+        "val": 60416.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 51200,
+          "igst": 9216.0,
+          "cgst": 0,
+          "sgst": 0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AAQFS9012B1Z7",
+      "trdnm": "SREE VINAYAKA TOOLS",
+      "supfildt": "03-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "SVT457",
+        "typ": "R",
+        "dt": "14-09-2026",
+        "val": 80476.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 68200.0,
+          "igst": 0.0,
+          "cgst": 6138.0,
+          "sgst": 6138.0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "SVT/0462/26-27",
+        "typ": "R",
+        "dt": "20-09-2026",
+        "val": 28084.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 23800,
+          "igst": 0,
+          "cgst": 2142.0,
+          "sgst": 2142.0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "SVT/0471/26-27",
+        "typ": "R",
+        "dt": "29-09-2026",
+        "val": 20827.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 17650,
+          "igst": 0,
+          "cgst": 1588.5,
+          "sgst": 1588.5,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AAKFC4471N1ZZ",
+      "trdnm": "COOLAIR SYSTEMS",
+      "supfildt": "03-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "CAS/26/0318",
+        "typ": "R",
+        "dt": "16-09-2026",
+        "val": 213606.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 28,
+          "txval": 157200.0,
+          "igst": 0.0,
+          "cgst": 22008.0,
+          "sgst": 22008.0,
+          "cess": 0
+         },
+         {
+          "num": 2,
+          "rt": 18,
+          "txval": 10500.0,
+          "igst": 0.0,
+          "cgst": 945.0,
+          "sgst": 945.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36ADVPR3328G1Z3",
+      "trdnm": "PARADISE CATERERS",
+      "supfildt": "03-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "PC/2627/118",
+        "typ": "R",
+        "dt": "15-09-2026",
+        "val": 108324.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 91800.0,
+          "igst": 0.0,
+          "cgst": 8262.0,
+          "sgst": 8262.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AACFB5519J1ZH",
+      "trdnm": "BHARAT ABRASIVES",
+      "supfildt": "05-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "BA/26-27/064",
+        "typ": "R",
+        "dt": "20-09-2026",
+        "val": 68157.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 57760.0,
+          "igst": 0.0,
+          "cgst": 5198.4,
+          "sgst": 5198.4,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "29AAECB6672P1ZW",
+      "trdnm": "BENGALURU FASTENERS PVT LTD",
+      "supfildt": "07-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "BFL/26-27/2290",
+        "typ": "R",
+        "dt": "21-09-2026",
+        "val": 66198.0,
+        "pos": "29",
+        "rev": "N",
+        "itcavl": "N",
+        "rsn": "P",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 56100.0,
+          "igst": 0.0,
+          "cgst": 5049.0,
+          "sgst": 5049.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AAOFO3341K1ZY",
+      "trdnm": "ORUGALLU ENGINEERING WORKS",
+      "supfildt": "07-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "OEW/115",
+        "typ": "R",
+        "dt": "24-09-2026",
+        "val": 121540.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 103000,
+          "igst": 0,
+          "cgst": 9270.0,
+          "sgst": 9270.0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "OEW/109",
+        "typ": "R",
+        "dt": "04-09-2026",
+        "val": 68440.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 58000,
+          "igst": 0,
+          "cgst": 5220.0,
+          "sgst": 5220.0,
+          "cess": 0
+         }
+        ]
+       },
+       {
+        "inum": "OEW/121",
+        "typ": "R",
+        "dt": "30-09-2026",
+        "val": 72570.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 61500,
+          "igst": 0,
+          "cgst": 5535.0,
+          "sgst": 5535.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AAGCT8890F1ZU",
+      "trdnm": "TELANGANA LUBRICANTS & CHEMICALS PVT LTD",
+      "supfildt": "06-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "TLC/26-27/03391",
+        "typ": "R",
+        "dt": "27-09-2026",
+        "val": 185260.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 157000.0,
+          "igst": 0.0,
+          "cgst": 14130.0,
+          "sgst": 14130.0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "36AAJCS6618L1ZT",
+      "trdnm": "SIGMA MACHINE TOOLS PVT LTD",
+      "supfildt": "07-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "SMT/26-27/0788",
+        "typ": "R",
+        "dt": "18-09-2026",
+        "val": 259600.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 220000.0,
+          "igst": 0.0,
+          "cgst": 19800.0,
+          "sgst": 19800.0,
+          "cess": 0
+         }
+        ],
+        "srctyp": "e-Invoice",
+        "irn": "b4868f417da9fa685541f8f06e97cb48ad5c9e551ebd2735821d94162aa2d552",
+        "irngendate": "18-09-2026"
+       }
+      ]
+     },
+     {
+      "ctin": "36AAICT2290R1ZL",
+      "trdnm": "TELENET BROADBAND SERVICES",
+      "supfildt": "07-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "TNB/AUG26/55821",
+        "typ": "R",
+        "dt": "01-09-2026",
+        "val": 5899.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 4999,
+          "igst": 0,
+          "cgst": 449.91,
+          "sgst": 449.91,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "ctin": "37AAZFK1203M1ZW",
+      "trdnm": "KRISHNA TRADERS",
+      "supfildt": "03-10-2026",
+      "supprd": "092026",
+      "inv": [
+       {
+        "inum": "KT/26-27/0091",
+        "typ": "R",
+        "dt": "17-09-2026",
+        "val": 219480.0,
+        "pos": "36",
+        "rev": "N",
+        "itcavl": "Y",
+        "rsn": "",
+        "diffprcnt": 1,
+        "items": [
+         {
+          "num": 1,
+          "rt": 18,
+          "txval": 186000,
+          "igst": 33480.0,
+          "cgst": 0,
+          "sgst": 0,
+          "cess": 0
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

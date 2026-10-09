@@ -1,0 +1,6 @@
+node_modules
+dist
+dist-single
+.env*
+*.zip
+scripts/demo_irp_private.pem

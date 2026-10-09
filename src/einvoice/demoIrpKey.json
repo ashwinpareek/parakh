@@ -1,0 +1,8 @@
+{
+ "kty": "RSA",
+ "kid": "PARAKH-DEMO-IRP",
+ "alg": "RS256",
+ "use": "sig",
+ "n": "kij7HlK0RFXCBJLwQmklnClFm5HTczyboPHov7AtagEHacwaOkKYcwA7uKfD2xEct6lo99RQnG7iHRULLGAQ9pm3pDwR7ZQintzEkc_kEy5t3T8-dK00rHKq9Jbp-ur4rcDl4sr6bvbWSny-xbR1cIat5GMQLln6YynoD8TYoHbJ8iP5pCzxTjW0NS0iCvEH-FnxjYB0CFCLNoj-Bwvcid90-lXcZ0P36Ra1aAyyvY_gRFPCpWDUlYLLnaMkpH0cG6jUe7kPf4CJXYlcWJpCahB7nxWF8WE50U2RL_cMe2C0YyiLxa5UMY-e_FVELt491LKwb8JgmgjKjVUYvLtsqw",
+ "e": "AQAB"
+}

@@ -1,0 +1,29 @@
+// Plain-language definitions for every GST term the app shows. Written for someone who has never
+// filed a return: one sentence of meaning, one of why it matters, and a concrete example.
+
+export interface Term { term: string; short: string; why: string; example?: string }
+
+export const GLOSSARY: Record<string, Term> = {
+  gst: { term: 'GST', short: 'Goods and Services Tax: the tax added to almost everything a business sells in India.', why: 'Businesses collect it from customers and pay it to the government every month.', example: 'A ₹1,000 drill bit at 18% GST costs ₹1,180.' },
+  itc: { term: 'Input tax credit (ITC)', short: 'The GST you paid when buying for your business, which you can subtract from the GST you owe on your sales.', why: 'It is real money. Every rupee of ITC you lose is a rupee of extra tax you pay.', example: 'You collected ₹50,000 GST on sales and paid ₹42,000 GST on purchases, so you pay the government only ₹8,000.' },
+  gstin: { term: 'GSTIN', short: 'A business’s 15-character GST registration number, like a PAN for GST.', why: 'Every tax invoice must show the supplier’s and the buyer’s GSTIN, or the credit cannot be claimed.', example: '36AAKCS4821M1ZX: 36 is Telangana, the next 10 characters are the PAN, the last one is a check character.' },
+  invoice: { term: 'Tax invoice', short: 'The bill a supplier gives you. The law lists what it must show.', why: 'A bill missing required details is not a valid tax invoice, so no credit can be claimed on it.' },
+  gstr1: { term: 'GSTR-1', short: 'The monthly return where your supplier tells the government what they sold, and to whom.', why: 'If your supplier does not include your bill in it, the government never learns you paid that GST.', example: 'Due on the 11th of the next month.' },
+  gstr2b: { term: 'GSTR-2B', short: 'A statement the GST portal makes for you each month, listing every bill your suppliers reported against your GSTIN.', why: 'You can only claim credit for bills that appear in it. It is the government’s version of your purchases.', example: 'Made on the 14th of the next month.' },
+  ims: { term: 'IMS (Invoice Management System)', short: 'A screen on the GST portal where you accept, reject or keep pending each bill your suppliers reported.', why: 'What you accept becomes claimable credit. Rejecting sends a wrong bill back to the supplier to fix.', example: 'Decisions lock when GSTR-2B is made on the 14th.' },
+  gstr3b: { term: 'GSTR-3B', short: 'Your monthly summary return: tax on sales, credit you claim, and the balance you pay.', why: 'This is where the credit is actually claimed. Table 4 holds the ITC figures.', example: 'Due on the 20th of the next month.' },
+  cgst: { term: 'CGST + SGST', short: 'When buyer and seller are in the same state, GST is split in two equal halves: Central GST and State GST.', why: 'Charging the wrong type of GST makes the credit unusable even if the amount is right.', example: 'Hyderabad to Warangal at 18%: 9% CGST + 9% SGST.' },
+  igst: { term: 'IGST', short: 'Integrated GST, charged when goods or services move from one state to another.', why: 'It must be used only for inter-state supplies.', example: 'Pune to Warangal at 18%: 18% IGST.' },
+  pos: { term: 'Place of supply', short: 'The state where the law treats the sale as happening, usually where the buyer receives the goods.', why: 'It decides IGST vs CGST + SGST, and whether you can claim the credit in your state.' },
+  hsn: { term: 'HSN / SAC code', short: 'A number that identifies what was sold. HSN is for goods, SAC is for services.', why: 'The code decides the GST rate. A wrong code often means a wrong rate.', example: '8415 = air conditioners (18%). 9963 = food and catering services.' },
+  rate: { term: 'GST rate', short: 'The percentage of GST charged. Since 22 Sep 2025 most items are at 5%, 18% or 40%.', why: 'Old 12% and 28% rates still appear on some bills and are usually wrong now.' },
+  blocked: { term: 'Blocked credit (Sec 17(5))', short: 'Purchases the law says you can never claim credit on, even with a perfect bill.', why: 'Claiming it anyway leads to a demand for the tax plus interest and penalty.', example: 'Staff meals, cars, club memberships, gifts.' },
+  einvoice: { term: 'E-invoice and IRN', short: 'Larger suppliers must register each bill on the government’s Invoice Registration Portal. It returns a unique IRN number and a signed QR code.', why: 'For those suppliers, a bill without an IRN is not valid. The QR proves the bill was registered.', example: 'Required when the supplier’s turnover exceeds ₹5 crore.' },
+  qr: { term: 'Signed QR code', short: 'The QR printed on an e-invoice. It holds the key bill details, digitally signed by the government portal.', why: 'If the printed bill says something different from the signed QR, the bill was edited after registration.' },
+  recon: { term: 'Reconciliation', short: 'Comparing your purchase records with what your suppliers reported to the government (GSTR-2B).', why: 'Every difference is either lost credit or a mistake someone has to fix.' },
+  timeLimit: { term: 'ITC time limit', short: 'Credit for a bill must be claimed by 30 November after the end of its financial year.', why: 'After that date the credit is lost permanently.', example: 'A bill from March 2025 had to be claimed by 30 Nov 2025.' },
+  days180: { term: '180-day rule', short: 'If you do not pay your supplier within 180 days of the bill, you must give back the credit you took.', why: 'You can claim it again once you pay.' },
+  rcm: { term: 'Reverse charge', short: 'For a few purchases, you pay the GST to the government yourself instead of the supplier.', why: 'The bill must say whether reverse charge applies.' },
+};
+
+export const GLOSSARY_ORDER = ['gst', 'itc', 'gstin', 'invoice', 'hsn', 'rate', 'cgst', 'igst', 'pos', 'gstr1', 'gstr2b', 'ims', 'gstr3b', 'recon', 'einvoice', 'qr', 'blocked', 'timeLimit', 'days180', 'rcm'];
