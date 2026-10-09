@@ -64,27 +64,37 @@ Providers: **Claude** when the app runs inside claude.ai (no key needed), or **G
 
 ```mermaid
 flowchart LR
-  A[PDF / scan / photo] -->|text layer| P[Layout parser<br/>pdf.js + column mapping]
-  A -->|no text| V[AI vision extraction]
-  R[Purchase register CSV/XLSX] --> S[Structured import]
-  G[GSTR-2B JSON/XLSX] --> M
-  P & V & S --> N[Normalised Invoice model]
-  N --> E[Rule engine<br/>Rule 46 · GSTIN · tax · ITC]
-  N --> M[Reconciler<br/>weighted fuzzy match]
-  N --> AI[AI review<br/>HSN fit · Sec 17(5) · verdict]
-  E & M & AI --> X[Analysis<br/>risk · ITC at risk · IMS · 3B]
-  X --> UI[Dashboard · evidence viewer · supplier follow-up · exports]
+  A["PDF / scan / photo"] -->|text layer| P["Layout parser<br/>pdf.js + column mapping"]
+  A -->|no text| V["AI vision extraction"]
+  A -->|e-invoice QR| Q["Signed QR check<br/>RS256 signature vs print"]
+  R["Purchase register CSV/XLSX"] --> S["Structured import"]
+  G["GSTR-2B JSON/XLSX"] --> M
+  P --> N["Normalised invoice model"]
+  V --> N
+  S --> N
+  Q --> E
+  N --> E["Rule engine<br/>Rule 46 · GSTIN · tax · ITC"]
+  N --> M["Reconciler<br/>weighted fuzzy match"]
+  N --> AI["AI review<br/>HSN fit · Sec 17(5) · verdict"]
+  E --> X["Analysis<br/>risk · ITC at risk · IMS · GSTR-3B"]
+  M --> X
+  AI --> X
+  X --> UI["Dashboard · evidence viewer · supplier follow-up · exports"]
 ```
 
 ```
 src/
   domain/      types, GSTIN, rules, reconciliation, scoring (pure TypeScript, no UI)
   ingest/      pdf.js text + rendering, layout parser, CSV/XLSX/2B readers
-  ai/          provider abstraction (Claude / Gemini) and the three AI tasks
+  einvoice/    e-invoice QR decoding and signature verification
+  ai/          provider chain (Claude / hosted Parakh AI / Gemini / labelled fallbacks) and AI tasks
   export/      Excel workbook, CSV, HTML audit report
-  ui/          React app: overview, invoices, evidence viewer, reconciliation, suppliers, filing actions
+  ui/          React app: overview, invoices, evidence viewer, reconciliation, suppliers, filing, learn
+  ui/onboarding/  animated intro, role-based welcome, missions, page hints
+api/
+  ai.js        Vercel serverless AI proxy; the key stays on the server
 scripts/
-  generate_samples.py   builds the demo pack (15 invoices with planted issues, GSTR-2B, register)
+  generate_samples.py   builds the demo pack (16 invoices with planted issues, GSTR-2B, register)
   smoke.ts              runs the engine on the demo pack in Node and prints every finding
 ```
 
