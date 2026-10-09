@@ -92,7 +92,7 @@ export default function App() {
       <aside className="side">
         <div className="brand">
           <AnimatedMark size={28} delay={0.2} />
-          <div><div className="brand-name">Parakh <span className="deva brand-deva">परख</span></div><div className="brand-sub">tests every GST bill like gold</div></div>
+          <div><div className="brand-name">Parakh</div><div className="brand-sub">GST bill checker</div></div>
         </div>
         <nav className="nav" aria-label="Main">
           <div className="nav-label">Workspace</div>
