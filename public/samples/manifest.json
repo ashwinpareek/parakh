@@ -1,0 +1,47 @@
+{
+ "company": {
+  "name": "Sri Venkateswara Precision Components Pvt Ltd",
+  "gstin": "36AAKCS4821M1ZX",
+  "state": "36",
+  "address": "Plot 14, KUDA Industrial Estate, Madikonda, Hanamkonda, Telangana 506003"
+ },
+ "period": "2026-09",
+ "invoices": [
+  "invoices/01_deccan_steel_DST-0412.pdf",
+  "invoices/02_pune_toolcraft_PTI-1187.pdf",
+  "invoices/03_kakatiya_packaging_KPS-0921.pdf",
+  "invoices/04_godavari_electricals_GE-1543.pdf",
+  "invoices/05_nizam_hydraulics_NH-233.pdf",
+  "invoices/06_chennai_bearings_CBC-7781.pdf",
+  "invoices/07_sree_vinayaka_tools_SVT-0457.pdf",
+  "invoices/08_coolair_systems_CAS-0318.pdf",
+  "invoices/09_paradise_caterers_PC-118.pdf",
+  "invoices/10_laxmi_hardware_LHS-2268.pdf",
+  "invoices/11_deccan_steel_DST-0412_copy.pdf",
+  "invoices/12_bharat_abrasives_BA-064.pdf",
+  "invoices/13_bengaluru_fasteners_BFL-2290.pdf",
+  "invoices/14_orugallu_engineering_OEW-115.pdf",
+  "invoices/15_telangana_lubricants_TLC-03391_scan.jpg",
+  "invoices/16_sigma_machine_tools_SMT-0788.pdf"
+ ],
+ "register": "purchase_register.csv",
+ "gstr2b": "gstr2b_092026.json",
+ "scenarios": {
+  "01_deccan_steel_DST-0412.pdf": "clean",
+  "02_pune_toolcraft_PTI-1187.pdf": "clean",
+  "03_kakatiya_packaging_KPS-0921.pdf": "wrong tax head",
+  "04_godavari_electricals_GE-1543.pdf": "gstin typo",
+  "05_nizam_hydraulics_NH-233.pdf": "missing in 2B",
+  "06_chennai_bearings_CBC-7781.pdf": "value mismatch",
+  "07_sree_vinayaka_tools_SVT-0457.pdf": "format mismatch",
+  "08_coolair_systems_CAS-0318.pdf": "legacy rate",
+  "09_paradise_caterers_PC-118.pdf": "blocked credit",
+  "10_laxmi_hardware_LHS-2268.pdf": "missing fields",
+  "11_deccan_steel_DST-0412_copy.pdf": "duplicate",
+  "12_bharat_abrasives_BA-064.pdf": "cancelled gstin",
+  "13_bengaluru_fasteners_BFL-2290.pdf": "pos mismatch",
+  "14_orugallu_engineering_OEW-115.pdf": "math errors",
+  "15_telangana_lubricants_TLC-03391_scan.jpg": "no irn scan",
+  "16_sigma_machine_tools_SMT-0788.pdf": "qr tampered"
+ }
+}

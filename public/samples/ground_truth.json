@@ -1,0 +1,234 @@
+{
+ "documents": {
+  "01_deccan_steel_DST-0412.pdf": {
+   "invoiceNo": "DST/26-27/0412",
+   "invoiceDate": "2026-09-03",
+   "supplierGstin": "36AAHFD7712K1Z9",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 185605.0,
+   "grandTotal": 219014.0,
+   "itemCount": 2,
+   "expected": [],
+   "scenario": "clean"
+  },
+  "02_pune_toolcraft_PTI-1187.pdf": {
+   "invoiceNo": "PTI/2627/1187",
+   "invoiceDate": "2026-09-05",
+   "supplierGstin": "27AAFCP3391Q1ZP",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 143500.0,
+   "grandTotal": 169330.0,
+   "itemCount": 2,
+   "expected": [],
+   "scenario": "clean"
+  },
+  "03_kakatiya_packaging_KPS-0921.pdf": {
+   "invoiceNo": "KPS/0921",
+   "invoiceDate": "2026-09-06",
+   "supplierGstin": "36ABDFK5520H1ZH",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 92450.0,
+   "grandTotal": 109091.0,
+   "itemCount": 2,
+   "expected": [
+    "TAX-HEAD-IGST"
+   ],
+   "scenario": "wrong tax head"
+  },
+  "04_godavari_electricals_GE-1543.pdf": {
+   "invoiceNo": "GE/1543",
+   "invoiceDate": "2026-09-08",
+   "supplierGstin": "36AGPFG8184C1Z5",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 63620.0,
+   "grandTotal": 75072.0,
+   "itemCount": 2,
+   "expected": [
+    "GSTIN-SUP-INVALID",
+    "RECON-SUGGESTED"
+   ],
+   "scenario": "gstin typo"
+  },
+  "05_nizam_hydraulics_NH-233.pdf": {
+   "invoiceNo": "NH/26-27/233",
+   "invoiceDate": "2026-09-11",
+   "supplierGstin": "36AAJFN2245E1ZG",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 62580.0,
+   "grandTotal": 73844.0,
+   "itemCount": 2,
+   "expected": [
+    "RECON-MISSING-2B"
+   ],
+   "scenario": "missing in 2B"
+  },
+  "06_chennai_bearings_CBC-7781.pdf": {
+   "invoiceNo": "CBC/INV/7781",
+   "invoiceDate": "2026-09-12",
+   "supplierGstin": "33AABCC8834L1ZH",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 126000.0,
+   "grandTotal": 148680.0,
+   "itemCount": 2,
+   "expected": [
+    "RECON-MISMATCH"
+   ],
+   "scenario": "value mismatch"
+  },
+  "07_sree_vinayaka_tools_SVT-0457.pdf": {
+   "invoiceNo": "SVT/0457/26-27",
+   "invoiceDate": "2026-09-14",
+   "supplierGstin": "36AAQFS9012B1Z7",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 68200.0,
+   "grandTotal": 80476.0,
+   "itemCount": 2,
+   "expected": [
+    "RECON-SUGGESTED"
+   ],
+   "scenario": "format mismatch"
+  },
+  "08_coolair_systems_CAS-0318.pdf": {
+   "invoiceNo": "CAS/26/0318",
+   "invoiceDate": "2026-09-16",
+   "supplierGstin": "36AAKFC4471N1ZZ",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 167700.0,
+   "grandTotal": 213606.0,
+   "itemCount": 2,
+   "expected": [
+    "RATE-LEGACY"
+   ],
+   "scenario": "legacy rate"
+  },
+  "09_paradise_caterers_PC-118.pdf": {
+   "invoiceNo": "PC/2627/118",
+   "invoiceDate": "2026-09-15",
+   "supplierGstin": "36ADVPR3328G1Z3",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 91800.0,
+   "grandTotal": 108324.0,
+   "itemCount": 2,
+   "expected": [
+    "ITC-BLOCKED"
+   ],
+   "scenario": "blocked credit"
+  },
+  "10_laxmi_hardware_LHS-2268.pdf": {
+   "invoiceNo": "LHS-2268",
+   "invoiceDate": "2026-09-18",
+   "supplierGstin": "36AFGPL7765D1Z9",
+   "buyerGstin": null,
+   "taxableTotal": 10940.0,
+   "grandTotal": 12909.0,
+   "itemCount": 2,
+   "expected": [
+    "R46-BUYER-GSTIN",
+    "R46-HSN",
+    "R46-SIGN",
+    "RECON-MISSING-2B"
+   ],
+   "scenario": "missing fields"
+  },
+  "11_deccan_steel_DST-0412_copy.pdf": {
+   "invoiceNo": "DST/26-27/0412",
+   "invoiceDate": "2026-09-03",
+   "supplierGstin": "36AAHFD7712K1Z9",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 185605.0,
+   "grandTotal": 219014.0,
+   "itemCount": 2,
+   "expected": [
+    "DUP-EXACT"
+   ],
+   "scenario": "duplicate"
+  },
+  "12_bharat_abrasives_BA-064.pdf": {
+   "invoiceNo": "BA/26-27/064",
+   "invoiceDate": "2026-09-20",
+   "supplierGstin": "36AACFB5519J1ZH",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 57760.0,
+   "grandTotal": 68157.0,
+   "itemCount": 2,
+   "expected": [
+    "GSTIN-SUP-CANCELLED"
+   ],
+   "scenario": "cancelled gstin"
+  },
+  "13_bengaluru_fasteners_BFL-2290.pdf": {
+   "invoiceNo": "BFL/26-27/2290",
+   "invoiceDate": "2026-09-21",
+   "supplierGstin": "29AAECB6672P1ZW",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 56100.0,
+   "grandTotal": 66198.0,
+   "itemCount": 2,
+   "expected": [
+    "POS-OTHER-STATE",
+    "RECON-2B-INELIGIBLE"
+   ],
+   "scenario": "pos mismatch"
+  },
+  "14_orugallu_engineering_OEW-115.pdf": {
+   "invoiceNo": "OEW/115",
+   "invoiceDate": "2026-09-24",
+   "supplierGstin": "36AAOFO3341K1ZY",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 105000.0,
+   "grandTotal": 123720.0,
+   "itemCount": 2,
+   "expected": [
+    "MATH-LINE-VALUE",
+    "MATH-CGST-SGST",
+    "RECON-MISMATCH"
+   ],
+   "scenario": "math errors"
+  },
+  "15_telangana_lubricants_TLC-03391_scan.jpg": {
+   "invoiceNo": "TLC/26-27/03391",
+   "invoiceDate": "2026-09-27",
+   "supplierGstin": "36AAGCT8890F1ZU",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 157000.0,
+   "grandTotal": 185260.0,
+   "itemCount": 2,
+   "expected": [
+    "EINV-MISSING-IRN"
+   ],
+   "scenario": "no irn scan"
+  },
+  "16_sigma_machine_tools_SMT-0788.pdf": {
+   "invoiceNo": "SMT/26-27/0788",
+   "invoiceDate": "2026-09-18",
+   "supplierGstin": "36AAJCS6618L1ZT",
+   "buyerGstin": "36AAKCS4821M1ZX",
+   "taxableTotal": 250000.0,
+   "grandTotal": 295000.0,
+   "itemCount": 1,
+   "expected": [
+    "EINV-QR-MISMATCH",
+    "RECON-MISMATCH"
+   ],
+   "scenario": "qr tampered"
+  }
+ },
+ "register": {
+  "DST/24-25/1188": [
+   "ITC-TIME-BARRED"
+  ],
+  "CBC/INV/7650": [
+   "ITC-180-DAYS"
+  ],
+  "NH/26-27/241": [
+   "RECON-MISSING-2B"
+  ],
+  "OEW/121": [
+   "RECON-SUGGESTED"
+  ]
+ },
+ "portalOnly": [
+  "KT/26-27/0091",
+  "PTI/2627/1219"
+ ]
+}

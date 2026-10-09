@@ -1,0 +1,57 @@
+{
+ "invoices/15_telangana_lubricants_TLC-03391_scan.jpg": {
+  "invoiceNo": "TLC/26-27/03391",
+  "invoiceDate": "2026-09-27",
+  "supplier": {
+   "name": "Telangana Lubricants & Chemicals Pvt Ltd",
+   "gstin": "36AAGCT8890F1ZU",
+   "address": "Plot 3, Pashamylaram Industrial Park, Sangareddy, Telangana 502307",
+   "stateCode": "36"
+  },
+  "buyer": {
+   "name": "Sri Venkateswara Precision Components Pvt Ltd",
+   "gstin": "36AAKCS4821M1ZX",
+   "address": "Plot 14, KUDA Industrial Estate, Madikonda, Hanamkonda, Telangana 506003",
+   "stateCode": "36"
+  },
+  "placeOfSupply": "36",
+  "reverseCharge": false,
+  "irn": null,
+  "hasSignature": true,
+  "items": [
+   {
+    "description": "Servo Cut Oil 210 L Barrel",
+    "hsn": "27101980",
+    "qty": 4,
+    "unit": "BRL",
+    "unitPrice": 21400.0,
+    "taxableValue": 85600.0,
+    "gstRate": 18,
+    "cgst": 7704.0,
+    "sgst": 7704.0,
+    "igst": 0.0,
+    "cess": 0
+   },
+   {
+    "description": "Hydraulic Oil ISO VG 68 (210 L)",
+    "hsn": "27101980",
+    "qty": 3,
+    "unit": "BRL",
+    "unitPrice": 23800.0,
+    "taxableValue": 71400.0,
+    "gstRate": 18,
+    "cgst": 6426.0,
+    "sgst": 6426.0,
+    "igst": 0.0,
+    "cess": 0
+   }
+  ],
+  "taxableTotal": 157000.0,
+  "cgstTotal": 14130.0,
+  "sgstTotal": 14130.0,
+  "igstTotal": 0.0,
+  "cessTotal": 0,
+  "roundOff": 0.0,
+  "grandTotal": 185260.0
+ }
+}
