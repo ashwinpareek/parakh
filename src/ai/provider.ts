@@ -102,7 +102,7 @@ function geminiProvider(key: string): AiProvider {
 }
 
 /** Re-encode large photos so a request stays well under the hosting body limit (about 4.5 MB). */
-async function shrinkImage(b: Blob, maxSide = 1800, maxBytes = 1_200_000): Promise<Blob> {
+async function shrinkImage(b: Blob, maxSide = 1600, maxBytes = 900_000): Promise<Blob> {
   if (b.size <= maxBytes && b.type !== 'image/heic') return b;
   try {
     const bmp = await createImageBitmap(b);
@@ -135,7 +135,10 @@ async function serverProvider(): Promise<AiProvider | null> {
       const small = await shrinkImage(b);
       return { mime: small.type || 'image/jpeg', data: await blobToBase64(small) };
     }));
-    const r = await fetch('/api/ai', { method: 'POST', signal: opts.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt, images, json }) })
+    const body = JSON.stringify({ prompt, images, json });
+    const send = () => fetch('/api/ai', { method: 'POST', signal: opts.signal, headers: { 'content-type': 'application/json' }, body });
+    // Mobile data and campus Wi-Fi often drop one request; retry once before giving up.
+    const r = await send().catch(async () => { await new Promise((res) => setTimeout(res, 1500)); return send(); })
       .catch((e) => { throw new AiError('network', String(e?.message ?? e)); });
     if (!r.ok) {
       const body = await r.json().catch(() => null) as { error?: string; detail?: string } | null;
@@ -187,7 +190,7 @@ export function describeAiError(e: unknown): string {
     case 'invalid_json': return 'The AI answer could not be read. Try again.';
     case 'images_unavailable': return 'This view cannot send images to the AI.';
     case 'cancelled': return 'Stopped.';
-    case 'network': return 'Could not reach the AI service from here.';
+    case 'network': return 'Could not reach the AI service. Check your internet connection and try again.';
     case 'timeout': return 'The AI took too long to answer. Try again.';
     case 'too_large': return 'That image is too large to send. Try a smaller photo or a PDF.';
     case 'not_configured': return 'The AI key is not set on the server.';
