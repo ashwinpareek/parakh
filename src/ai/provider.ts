@@ -196,7 +196,7 @@ export function describeAiError(e: unknown): string {
     case 'not_configured': return 'The AI key is not set on the server.';
     default: {
       const d = (e as AiError)?.message;
-      return d && !/^AI server returned/.test(d) ? `The AI request failed: ${d.slice(0, 140)}` : 'The AI request failed. Try again.';
+      return d && !/^AI server returned/.test(d) ? `The AI request failed: ${d.slice(0, 400)}` : 'The AI request failed. Try again.';
     }
   }
 }

@@ -18,7 +18,8 @@ const hits = new Map(); // best-effort per-instance rate limit
 
 // Fallback list if model discovery fails. Google retires model names often, so the live list
 // (discoverGemini) is tried first and these only fill in.
-const GEMINI_STATIC = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest', 'gemini-2.5-flash-lite'];
+const GEMINI_STATIC = ['gemini-2.5-flash', 'gemini-2.5-flash-lite']; // used only when discovery returns nothing
+let lastGood = null; // the model that answered most recently is tried first
 const DEADLINE_MS = 52_000; // stay inside the 60 s function limit
 let geminiCache = { at: 0, list: [] };
 
@@ -112,7 +113,7 @@ async function claudeOnce(model, prompt, images, json) {
 /** Try each model; retry a busy model once; skip models that do not exist or are out of quota. */
 async function complete(p, prompt, images, json) {
   const models = p === 'claude' ? CLAUDE_MODELS
-    : [process.env.AI_MODEL, ...(await discoverGemini()).slice(0, 4), ...GEMINI_STATIC].filter(Boolean);
+    : await (async () => { const live = await discoverGemini(); return [process.env.AI_MODEL, lastGood, ...(live.length ? live.slice(0, 6) : GEMINI_STATIC)].filter(Boolean); })();
   const once = p === 'claude' ? claudeOnce : geminiOnce;
   const start = Date.now(); const tried = [];
   let last = new UpstreamError(502, 'No model answered.');
@@ -120,7 +121,7 @@ async function complete(p, prompt, images, json) {
     if (Date.now() - start > DEADLINE_MS - 8000) break;
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        return { text: await once(model, prompt, images, json), model };
+        const text = await once(model, prompt, images, json); if (p === 'gemini') lastGood = model; return { text, model };
       } catch (e) {
         last = e; tried.push(`${model}: ${e.status}`);
         if (e.status === 401 || e.status === 403) throw e; // bad key: no model will work
@@ -160,7 +161,11 @@ export default async function handler(req, res) {
     if (limited(ip)) return res.status(429).json({ ok: false, error: 'rate_limited' });
     const t0 = Date.now();
     try {
-      const r = await complete(p, 'Reply with the single word OK.', [], false);
+      // ?check=image runs the same path as reading a scanned bill: an image plus JSON output.
+      const PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4//8/AAX+Av4N70a4AAAAAElFTkSuQmCC';
+      const r = check === 'image'
+        ? await complete(p, 'Describe this image in one word. Reply with only JSON: {"word": string}', [{ mime: 'image/png', data: PNG }], true)
+        : await complete(p, 'Reply with the single word OK.', [], false);
       return res.status(200).json({ ok: true, provider: p, model: r.model, ms: Date.now() - t0, reply: r.text.trim().slice(0, 20), available: p === 'gemini' ? (await discoverGemini()).slice(0, 6) : undefined });
     } catch (e) {
       return res.status(200).json({ ok: false, provider: p, error: errorCode(e), status: e.status, detail: e.detail });
