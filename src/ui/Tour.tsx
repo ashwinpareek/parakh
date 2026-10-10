@@ -110,10 +110,9 @@ export function Tour({ a, step, setStep, go, steps: custom, finishLabel = 'Finis
       window.clearTimeout(idle);
       idle = window.setTimeout(() => setTracking(false), 160);
     };
-    const main = document.querySelector('.main');
     window.addEventListener('resize', follow);
-    main?.addEventListener('scroll', follow, { passive: true });
-    return () => { window.removeEventListener('resize', follow); main?.removeEventListener('scroll', follow); window.clearTimeout(idle); };
+    window.addEventListener('scroll', follow, { passive: true });
+    return () => { window.removeEventListener('resize', follow); window.removeEventListener('scroll', follow); window.clearTimeout(idle); };
   }, []);
 
   useLayoutEffect(() => { if (card.current) setCardH(card.current.offsetHeight); }, [step]);
