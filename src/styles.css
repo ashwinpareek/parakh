@@ -80,10 +80,11 @@ a { color: var(--accent); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 /* ------------------------------------------------------------------ shell */
-.shell { display: grid; grid-template-columns: var(--side-w) minmax(0, 1fr); height: 100%; }
+.shell { display: grid; grid-template-columns: var(--side-w) minmax(0, 1fr); min-height: 100vh; }
 .side {
   background: var(--side-bg); color: var(--side-ink); display: flex; flex-direction: column;
   padding: 18px 12px 14px; gap: 18px; overflow-y: auto;
+  position: sticky; top: 0; height: 100vh; height: 100dvh; align-self: start; /* stays full height however the page scrolls */
 }
 .brand { display: flex; align-items: center; gap: 10px; padding: 2px 8px; }
 .brand-name { font: 600 17px/1 var(--font-sans); letter-spacing: -0.02em; color: #fff; }
@@ -110,7 +111,7 @@ a { color: var(--accent); }
 .side-link { background: none; border: 0; color: var(--side-dim); font-size: 12px; text-align: left; padding: 4px 10px; cursor: pointer; display: flex; gap: 8px; align-items: center; }
 .side-link:hover { color: #fff; }
 
-.main { overflow-y: auto; min-width: 0; }
+.main { min-width: 0; }
 .topbar {
   position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
   padding: 12px 28px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px);
@@ -470,7 +471,8 @@ table.t { width: 100%; border-collapse: collapse; font-size: 13px; }
 }
 @media (max-width: 900px) {
   .shell { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
-  .side { flex-direction: row; align-items: center; padding: 10px 16px; gap: 12px; overflow-x: auto; overflow-y: hidden; }
+  .side { flex-direction: row; align-items: center; padding: 10px 16px; gap: 12px; overflow-x: auto; overflow-y: hidden; height: 56px; z-index: 20; }
+  .topbar { top: 56px; }
   .ws-card, .side-foot, .nav-label, .brand-sub { display: none; }
   .nav { display: flex; gap: 2px; }
   .nav button { padding: 6px 9px; white-space: nowrap; }

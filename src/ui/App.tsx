@@ -64,7 +64,7 @@ export default function App() {
 
   const go = (r: Route) => {
     setRoute(r);
-    document.querySelector('.main')?.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 });
     const m = missionForRoute(r);
     if (m) completeMission(m);
   };
