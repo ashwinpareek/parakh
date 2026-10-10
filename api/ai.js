@@ -13,11 +13,34 @@
 
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_PER_WINDOW = 40;
-const CALL_TIMEOUT_MS = 40_000;
+const CALL_TIMEOUT_MS = 25_000;
 const hits = new Map(); // best-effort per-instance rate limit
 
-// Tried in order. A model that is unknown, overloaded or out of free quota falls through to the next.
-const GEMINI_MODELS = [process.env.AI_MODEL, 'gemini-2.5-flash', 'gemini-flash-latest', 'gemini-2.5-flash-lite', 'gemini-2.0-flash'].filter(Boolean);
+// Fallback list if model discovery fails. Google retires model names often, so the live list
+// (discoverGemini) is tried first and these only fill in.
+const GEMINI_STATIC = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest', 'gemini-2.5-flash-lite'];
+const DEADLINE_MS = 52_000; // stay inside the 60 s function limit
+let geminiCache = { at: 0, list: [] };
+
+/** Ask Google which Flash models this key can use right now, newest first. Cached for an hour. */
+async function discoverGemini() {
+  if (Date.now() - geminiCache.at < 3_600_000 && geminiCache.list.length) return geminiCache.list;
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 6000);
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200', { headers: { 'x-goog-api-key': process.env.GEMINI_API_KEY }, signal: ctl.signal });
+    clearTimeout(t);
+    if (!r.ok) return [];
+    const d = await r.json();
+    const ver = (n) => { const m = n.match(/gemini-(\d+(?:\.\d+)?)/); return m ? parseFloat(m[1]) : 0; };
+    const list = (d.models ?? [])
+      .filter((m) => (m.supportedGenerationMethods ?? []).includes('generateContent'))
+      .map((m) => String(m.name).replace(/^models\//, ''))
+      .filter((n) => /^gemini-[\d.]+-flash/.test(n) && !/image|tts|audio|live|embed|exp|thinking/.test(n))
+      .sort((a, b) => ver(b) - ver(a) || Number(/lite/.test(a)) - Number(/lite/.test(b)) || Number(/preview/.test(a)) - Number(/preview/.test(b)) || a.length - b.length);
+    geminiCache = { at: Date.now(), list };
+    return list;
+  } catch { return []; }
+}
 const CLAUDE_MODELS = [process.env.AI_MODEL, 'claude-haiku-5-5', 'claude-sonnet-5-5'].filter(Boolean);
 
 function provider() {
@@ -88,15 +111,18 @@ async function claudeOnce(model, prompt, images, json) {
 
 /** Try each model; retry a busy model once; skip models that do not exist or are out of quota. */
 async function complete(p, prompt, images, json) {
-  const models = p === 'claude' ? CLAUDE_MODELS : GEMINI_MODELS;
+  const models = p === 'claude' ? CLAUDE_MODELS
+    : [process.env.AI_MODEL, ...(await discoverGemini()).slice(0, 4), ...GEMINI_STATIC].filter(Boolean);
   const once = p === 'claude' ? claudeOnce : geminiOnce;
+  const start = Date.now(); const tried = [];
   let last = new UpstreamError(502, 'No model answered.');
   for (const model of [...new Set(models)]) {
+    if (Date.now() - start > DEADLINE_MS - 8000) break;
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         return { text: await once(model, prompt, images, json), model };
       } catch (e) {
-        last = e;
+        last = e; tried.push(`${model}: ${e.status}`);
         if (e.status === 401 || e.status === 403) throw e; // bad key: no model will work
         if (e.status === 400 && !/model|not found|not supported/i.test(e.detail ?? '')) throw e; // bad request
         const busy = e.status === 503 || e.status === 500 || e.status === 529;
@@ -105,6 +131,7 @@ async function complete(p, prompt, images, json) {
       }
     }
   }
+  if (tried.length > 1) last.detail = `${last.detail} (tried ${tried.join(', ')})`.slice(0, 400);
   throw last;
 }
 
@@ -134,7 +161,7 @@ export default async function handler(req, res) {
     const t0 = Date.now();
     try {
       const r = await complete(p, 'Reply with the single word OK.', [], false);
-      return res.status(200).json({ ok: true, provider: p, model: r.model, ms: Date.now() - t0, reply: r.text.trim().slice(0, 20) });
+      return res.status(200).json({ ok: true, provider: p, model: r.model, ms: Date.now() - t0, reply: r.text.trim().slice(0, 20), available: p === 'gemini' ? (await discoverGemini()).slice(0, 6) : undefined });
     } catch (e) {
       return res.status(200).json({ ok: false, provider: p, error: errorCode(e), status: e.status, detail: e.detail });
     }
