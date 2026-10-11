@@ -695,3 +695,21 @@ table.t { width: 100%; border-collapse: collapse; font-size: 13px; }
 .pro-tick { grid-row: span 2; width: 22px; height: 22px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); display: grid; place-items: center; }
 .pro-tick svg { width: 12px; height: 12px; }
 @media (max-width: 640px) { .pro-grid { grid-template-columns: minmax(0, 1fr); } .bs-row { grid-template-columns: 110px 1fr; } }
+
+/* missions: moving theme-coloured border so the dock is easy to spot */
+@property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.missions-pill, .missions-panel {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(from var(--spin), var(--accent) 0deg, var(--gold) 90deg, var(--accent-soft) 160deg, var(--accent) 240deg, var(--gold) 300deg, var(--accent) 360deg) border-box;
+  animation: missionSpin 3.2s linear infinite, missionGlow 2.4s ease-in-out infinite;
+}
+.missions-panel { animation: panelIn 0.4s var(--ease-out) both, missionSpin 3.2s linear infinite; }
+.missions-pill { height: 44px; font-weight: 500; }
+@keyframes missionSpin { to { --spin: 360deg; } }
+@keyframes missionGlow {
+  0%, 100% { box-shadow: 0 8px 24px rgba(18, 22, 26, 0.12), 0 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent); }
+  50% { box-shadow: 0 8px 24px rgba(18, 22, 26, 0.12), 0 0 0 7px color-mix(in srgb, var(--accent) 0%, transparent), 0 0 22px color-mix(in srgb, var(--gold) 45%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) { .missions-pill, .missions-panel { animation: none; } }
