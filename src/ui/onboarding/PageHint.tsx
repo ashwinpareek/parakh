@@ -4,6 +4,7 @@ import type { Route } from '../App';
 
 const HINTS: Partial<Record<Route['view'], string>> = {
   overview: 'Your summary for the month. Start with the headline, then the red part of the bar: that is GST stuck on bills with problems.',
+  recovery: 'Your to-do list for getting stuck GST back: who has to fix what, with one-tap WhatsApp messages. Tick things off as they get fixed.',
   invoices: 'Every bill, most urgent first. Click any row to open the bill and see what is wrong with it.',
   invoice: 'Left: the bill itself. Right: what Parakh found. Click a problem to see it highlighted on the bill.',
   recon: 'Your bills compared with the list your suppliers gave the government. Each tab is one kind of difference.',

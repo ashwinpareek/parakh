@@ -7,6 +7,7 @@ import { needsHumanReview, type WorkspaceApi } from '../workspace';
 import { T, useMode } from '../mode';
 import { MonthTimeline } from '../explain';
 import type { Route } from '../App';
+import { buildPlan } from '../../domain/recovery';
 
 export const CATEGORY_LABEL: Record<FindingCategory, string> = {
   reconciliation: 'Not matching GSTR-2B',
@@ -62,6 +63,7 @@ export function Overview({ a, api, go }: { a: Analysis; api: WorkspaceApi; go: (
   const fixFirst = ready.map((inv) => ({ inv, v: a.verdicts[inv.id], f: primaryFinding(a.findings.filter((x) => x.invoiceId === inv.id)) })).filter((x) => x.v.itcAtRisk > 0 || x.v.band === 'high').sort((x, y) => y.v.itcAtRisk - x.v.itcAtRisk).slice(0, 7);
   const weak = a.vendors.filter((v) => v.score < 70).slice(0, 5);
   const sources = new Set(a.invoices.map((i) => i.source.kind));
+  const plan = buildPlan(a);
 
   return (
     <div className="page">
@@ -86,6 +88,17 @@ export function Overview({ a, api, go }: { a: Analysis; api: WorkspaceApi; go: (
       </div>
 
       <div data-tour="timeline"><MonthTimeline period={a.period} asOf={a.asOf} atRisk={t.itcAtRisk} /></div>
+
+      {plan.recoverable > 0 && (
+        <button className="rec-teaser" onClick={() => go({ view: 'recovery' })}>
+          <span className="rt-icon"><Icon.recover /></span>
+          <span className="rt-body">
+            <b>{formatINRCompact(plan.recoverable)} of this can still be recovered</b>
+            <span>{plan.supplier.length} supplier{plan.supplier.length === 1 ? '' : 's'} to message{plan.you.length ? ` · ${plan.you.length} thing${plan.you.length === 1 ? '' : 's'} only you can fix` : ''}. Open your step-by-step recovery plan.</span>
+          </span>
+          <span className="btn primary sm">Start recovering <Icon.next /></span>
+        </button>
+      )}
 
       {api.pending.length > 0 && (
         <div className="callout ai" data-tour="scan">

@@ -5,6 +5,21 @@
 > Problem statement (Vriddhi / FinTech): *Check invoices and GST data for missing fields and mismatches.*
 > MVP scope covered: invoice upload · GSTIN validation · mismatch detection · risk checklist · report — plus AI extraction, GSTR-2B reconciliation, IMS actions and a GSTR-3B Table 4 draft.
 
+**Live:** https://parakh-khaki.vercel.app · no sign-up · works on phone and desktop · installable
+
+![Parakh](public/og.png)
+
+## What makes Parakh different
+
+Most GST tools stop at *finding* mismatches. Parakh is built around **getting the money back**:
+
+- **Recovery plan.** Every stuck rupee is sorted by who has to act: *suppliers must fix* (one-tap WhatsApp or email per supplier, with the exact correction to ask for), *you can unlock* (for example, pay the supplier within 180 days), and *do not claim* (duplicates, time-barred, Sec 17(5)). Mark each one Asked → Fixed and watch "Recovered so far" fill up.
+- **Cost of waiting.** Shows how much cash is locked and what it costs you each month at your own overdraft rate.
+- **Ask Parakh (Ctrl + K).** Jump to any bill or supplier, or ask "Which bills should I reject in IMS?". Answers use only this month's numbers, link invoice numbers to the bill, and fall back to rule-based answers when AI is off.
+- **Deadline reminders.** One click adds the 11th / 14th / 20th GST deadlines to your phone or Google calendar (.ics), with the amount at stake.
+- **Private by design.** No account, no database. Files are parsed and checked in the browser; data goes to AI only when you press an AI button. A "Where your data goes" panel says exactly what is sent.
+- **Installable.** Web app manifest + service worker: install it like an app and reopen it offline.
+
 ## Why this matters
 
 An Indian MSME claims ITC on hundreds of invoices a month. Credit is lost when an invoice is missing a mandatory field, the supplier charged the wrong tax head, the supplier never reported it, the GSTIN was cancelled, or the item is blocked under Sec 17(5). Each of these is found today by an accountant comparing PDFs with Excel downloads by hand, usually after the 14th, when IMS decisions are already locked in.

@@ -141,6 +141,9 @@ function FollowUpPanel({ a, api, gstin, go }: { a: Analysis; api: WorkspaceApi; 
                   </div>
                   <span style={{ flex: 1 }} />
                   <button className="btn sm" onClick={copy}><Icon.copy /> Copy</button>
+                  {mode === 'whatsapp'
+                    ? <a className="btn sm wa" href={`https://wa.me/?text=${encodeURIComponent(draft.whatsapp)}`} target="_blank" rel="noreferrer"><Icon.whatsapp /> Open in WhatsApp</a>
+                    : <a className="btn sm" href={`mailto:?subject=${encodeURIComponent(draft.subject)}&body=${encodeURIComponent(draft.email)}`}><Icon.mail /> Open in email</a>}
                 </div>
                 <div className="msg-box" id="followup-text">{text}</div>
                 {note && <p className="muted" style={{ fontSize: 12 }}>{note}</p>}

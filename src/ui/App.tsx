@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useWorkspace } from './workspace';
 import { Icon, Spinner } from './kit';
 import { Overview } from './views/Overview';
@@ -11,6 +11,10 @@ import { Report } from './views/Report';
 import { NewCheck, Settings } from './views/Modals';
 import { Learn } from './views/Learn';
 import { Reliability } from './views/Reliability';
+import { Recovery } from './views/Recovery';
+import { CommandBar } from './CommandBar';
+import { Privacy } from './views/Privacy';
+import { buildPlan } from '../domain/recovery';
 import { Tour } from './Tour';
 import { ModeContext, type Mode } from './mode';
 import { Welcome, type WelcomeAction } from './onboarding/Welcome';
@@ -21,6 +25,7 @@ import { MISSIONS, completeMission, missionForRoute, type Mission } from './onbo
 
 export type Route =
   | { view: 'overview' }
+  | { view: 'recovery' }
   | { view: 'invoices' }
   | { view: 'invoice'; id: string }
   | { view: 'recon' }
@@ -39,7 +44,7 @@ const ONBOARD_KEY = 'parakh.onboarded.session';
 export default function App() {
   const api = useWorkspace();
   const [route, setRoute] = useState<Route>({ view: 'overview' });
-  const [modal, setModal] = useState<'new' | 'settings' | null>(null);
+  const [modal, setModal] = useState<'new' | 'settings' | 'privacy' | null>(null);
   const [theme, setThemeState] = useState<Theme>(() => { try { return (localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light'); } catch { return 'light'; } });
 
   const [mode, setModeState] = useState<Mode>(() => { try { return (localStorage.getItem(MODE_KEY) as Mode) || 'simple'; } catch { return 'simple'; } });
@@ -47,6 +52,23 @@ export default function App() {
   const [tour, setTour] = useState<number | null>(null);
   const [welcome, setWelcome] = useState(() => { try { return sessionStorage.getItem(ONBOARD_KEY) !== '1'; } catch { return true; } });
   const [missionsOpen, setMissionsOpen] = useState(false);
+  const [cmd, setCmd] = useState(false);
+  // "Install app" appears when the browser offers it (Chrome, Edge, Android).
+  const [installEvt, setInstallEvt] = useState<(Event & { prompt: () => Promise<void> }) | null>(null);
+  useEffect(() => {
+    const on = (e: Event) => { e.preventDefault(); setInstallEvt(e as Event & { prompt: () => Promise<void> }); };
+    window.addEventListener('beforeinstallprompt', on);
+    return () => window.removeEventListener('beforeinstallprompt', on);
+  }, []);
+  useEffect(() => {
+    const on = (e: KeyboardEvent) => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target as HTMLElement)?.tagName ?? '');
+      if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); setCmd((v) => !v); }
+      else if (e.key === '/' && !typing) { e.preventDefault(); setCmd(true); }
+    };
+    window.addEventListener('keydown', on);
+    return () => window.removeEventListener('keydown', on);
+  }, []);
   const [spot, setSpot] = useState<Mission | null>(null);
   // If a mission finishes while its spotlight is still showing, open the checklist once the spotlight closes.
   const [openAfterSpot, setOpenAfterSpot] = useState(false);
@@ -73,9 +95,11 @@ export default function App() {
   };
   const a = api.analysis;
   const ws = api.ws;
+  const plan = useMemo(() => (a ? buildPlan(a) : null), [a]);
   const flagged = a ? Object.values(a.verdicts).filter((v) => v.band !== 'clear').length : 0;
   const nav: { id: Route['view']; label: string; icon: () => JSX.Element; count?: number }[] = [
     { id: 'overview', label: 'Overview', icon: Icon.overview },
+    { id: 'recovery', label: 'Recovery plan', icon: Icon.recover, count: plan ? plan.supplier.length + plan.you.length : undefined },
     { id: 'invoices', label: 'Invoices', icon: Icon.invoices, count: a ? a.invoices.length : undefined },
     { id: 'recon', label: 'Reconciliation', icon: Icon.recon, count: a ? a.totals.recon.mismatch + a.totals.recon['missing-in-2b'] + a.totals.recon['missing-in-books'] : undefined },
     { id: 'suppliers', label: 'Suppliers', icon: Icon.suppliers, count: a ? a.vendors.length : undefined },
@@ -120,6 +144,8 @@ export default function App() {
             <span className={`dot ${api.ai ? 'on' : ''}`} />
             {api.ai ? `AI: ${api.ai.label}` : api.aiChecked ? 'AI off · rules only' : 'Checking AI…'}
           </div>
+          {installEvt && <button className="side-link" onClick={async () => { await installEvt.prompt(); setInstallEvt(null); }}><Icon.install /> Install Parakh app</button>}
+          <button className="side-link" onClick={() => setModal('privacy')}><Icon.lock /> Private by design</button>
           <button className="side-link" onClick={() => setModal('settings')}><Icon.settings /> Settings</button>
         </div>
       </aside>
@@ -133,6 +159,7 @@ export default function App() {
             )}
           </div>
           <span className="spacer" />
+          {a && <button className="cmd-btn" onClick={() => setCmd(true)} aria-label="Search or ask Parakh" data-tour="ask"><Icon.command /><span className="cmd-txt">Search or ask</span><kbd>Ctrl K</kbd></button>}
           {api.busy && <span className="crumbs" role="status"><Spinner /> {api.busy}</span>}
           {flagged > 0 && !api.busy && <span className="pill high-risk"><span className="pip" />{flagged} bills need attention</span>}
           <div className="mode-switch" data-tour="mode">
@@ -154,6 +181,7 @@ export default function App() {
         )}
         {a && <div className="hint-wrap"><PageHint view={route.view} /></div>}
         {a && route.view === 'overview' && <Overview a={a} api={api} go={go} onTour={() => setTour(0)} />}
+        {a && route.view === 'recovery' && <Recovery a={a} api={api} go={go} />}
         {a && route.view === 'learn' && <Learn a={a} api={api} />}
         {a && route.view === 'reliability' && <Reliability a={a} api={api} go={go} />}
         {a && route.view === 'invoices' && <Invoices a={a} api={api} go={go} />}
@@ -165,11 +193,13 @@ export default function App() {
       </main>
 
       {modal === 'new' && <NewCheck api={api} onClose={() => setModal(null)} onDone={() => { setModal(null); go({ view: 'overview' }); }} />}
+      {modal === 'privacy' && <Privacy onClose={() => setModal(null)} aiOn={!!api.ai} />}
       {modal === 'settings' && <Settings api={api} onClose={() => setModal(null)} theme={theme} setTheme={setThemeState} />}
       {api.toast && <div className="toast" role="status">{api.toast}</div>}
       {a && tour != null && <Tour a={a} step={tour} setStep={setTour} go={go} />}
       {a && spot && <Tour a={a} steps={[spot.spotlight]} step={0} finishLabel="Got it" setStep={() => { if (spot.id === 'stuck') completeMission('stuck'); setSpot(null); }} go={go} />}
       {a && !welcome && <Missions a={a} open={missionsOpen} setOpen={(v) => { if (v && spot) setOpenAfterSpot(true); else setMissionsOpen(v); }} onUpload={() => setModal('new')} onShow={(m) => { setMissionsOpen(false); setSpot(m); }} />}
+      {a && cmd && <CommandBar a={a} api={api} go={go} onClose={() => setCmd(false)} />}
       {welcome && <Welcome a={a} onDone={finishWelcome} />}
     </div>
     </ModeContext.Provider>
