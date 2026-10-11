@@ -12,7 +12,7 @@ export type WelcomeAction = 'mission' | 'upload' | 'skip' | 'workspace';
 
 /** Each role gets its own path after "Who are you?":
  *  - small business: try one bill, then check your own bills (practice is the second option)
- *  - new to GST / judge: a 3-step money lesson, try one bill, then the guided mission
+ *  - new to GST: a 3-step money lesson, try one bill, then the guided mission
  *  - accountant / CA: what is automated and the law behind it, then straight into the workspace in Expert mode */
 const FLOWS: Record<Role, Scene[]> = {
   owner: ['idea', 'who', 'try', 'owner'],
@@ -112,7 +112,7 @@ function SceneIdea({ onNext }: { onNext: () => void }) {
 function SceneWho({ role, setRole }: { role: Role | null; setRole: (r: Role) => void }) {
   const opts: { id: Role; title: string; sub: string; icon: () => JSX.Element }[] = [
     { id: 'owner', title: 'I run or work in a small business', sub: 'Explain things simply and tell me what to do.', icon: Icon.suppliers },
-    { id: 'learner', title: 'I’m new to GST, just exploring', sub: 'Teach me as I go. I’m a student or a judge.', icon: Icon.learn },
+    { id: 'learner', title: 'I’m new to GST, just exploring', sub: 'Teach me as I go. I’m a student or just curious.', icon: Icon.learn },
     { id: 'accountant', title: 'I’m an accountant or CA', sub: 'Show legal references, rule IDs and risk scores.', icon: Icon.shield },
   ];
   return (

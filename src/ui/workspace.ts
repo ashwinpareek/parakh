@@ -228,7 +228,7 @@ export function useWorkspace() {
     for (const inv of ws.invoices) if (inv.extraction.method === 'pending' && inv.source.file) void startRead(inv, ai).catch(() => undefined);
   }, [ws?.sample, ws?.invoices.length, ai]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /** For the sample, the jury should never wait long: after this, the bundled transcription is shown (clearly labelled). */
+  /** For the sample, nobody should wait long: after this, the bundled transcription is shown (clearly labelled). */
   const SAMPLE_WAIT_MS = 4000;
 
   const extractWithAi = useCallback(async (inv: Invoice) => {

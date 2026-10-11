@@ -2,8 +2,7 @@
 
 **Parakh** means to test: every bill, tested before you trust it. Parakh checks purchase invoices before you claim input tax credit (ITC). It reads invoices (PDF, scans, photos, Tally/Zoho registers), validates them against GST law, reconciles them with GSTR-2B, and tells you in rupees how much credit is at risk and what to do about it: which IMS button to press, what to report in GSTR-3B, and what to ask each supplier.
 
-> Problem statement (Vriddhi / FinTech): *Check invoices and GST data for missing fields and mismatches.*
-> MVP scope covered: invoice upload · GSTIN validation · mismatch detection · risk checklist · report — plus AI extraction, GSTR-2B reconciliation, IMS actions and a GSTR-3B Table 4 draft.
+> In one place: invoice upload · GSTIN validation · mismatch detection · risk checklist · reports · AI extraction · GSTR-2B reconciliation · IMS actions · a GSTR-3B Table 4 draft · a recovery plan for stuck credit.
 
 **Live:** https://parakh-khaki.vercel.app · no sign-up · works on phone and desktop · installable
 
@@ -115,9 +114,9 @@ scripts/
 
 All processing happens in the browser; only documents the user chooses to send to AI leave the page.
 
-## AI for judges (no account needed)
+## AI with zero setup for visitors
 
-Host on Vercel with your team's key in `GEMINI_API_KEY` or `ANTHROPIC_API_KEY`; the app calls `api/ai.js`, so every visitor gets AI with no setup. If no AI is reachable, every AI button falls back to a labelled rule-based answer. Steps: [DEPLOY.md](DEPLOY.md).
+Host on Vercel with your own key in `GEMINI_API_KEY` or `ANTHROPIC_API_KEY`; the app calls `api/ai.js`, so every visitor gets AI with no setup. If no AI is reachable, every AI button falls back to a labelled rule-based answer. Steps: [DEPLOY.md](DEPLOY.md).
 
 ## Run it
 

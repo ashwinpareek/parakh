@@ -1,5 +1,5 @@
 // Parakh AI proxy (Vercel serverless function).
-// Lets every visitor use the AI features with the TEAM's key, so judges need no account or setup.
+// Lets every visitor use the AI features with the server's key, so visitors need no account or setup.
 // The key lives only in the server environment and is never sent to the browser.
 //
 // Environment (set one in Vercel → Project → Settings → Environment Variables):

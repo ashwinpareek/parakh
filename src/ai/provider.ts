@@ -118,7 +118,7 @@ async function shrinkImage(b: Blob, maxSide = 1600, maxBytes = 900_000): Promise
   } catch { return b; }
 }
 
-/** The team's hosted AI (api/ai.js): works for every visitor without an account or key. */
+/** The hosted AI (api/ai.js): works for every visitor without an account or key. */
 async function serverProvider(): Promise<AiProvider | null> {
   if (!/^https?:$/.test(location.protocol)) return null;
   try {
