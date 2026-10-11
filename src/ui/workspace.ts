@@ -190,27 +190,64 @@ export function useWorkspace() {
     setWs((w) => (w ? { ...w, invoices: w.invoices.map((i) => (i.id === id ? { ...i, ...patch, extraction: { ...i.extraction, reviewed: { at: new Date().toISOString(), edited } } } : i)) } : w));
   }, []);
 
+  /** Pure AI read of one bill: no state changes, so it can run ahead in the background. */
+  const aiRead = async (inv: Invoice, provider: AiProvider) => {
+    const isPdf = inv.source.kind === 'pdf';
+    const images = isPdf ? await pdfToImages(inv.source.file!) : [inv.source.file!];
+    const t = texts.current.get(inv.id) ?? null;
+    const textLayer = t && t.items.length > 15 ? t.items.map((i) => i.str).join(' ') : null;
+    const out = await extractInvoice(provider, provider.canSeeImages ? images : [], textLayer);
+    if (t) {
+      const boxes: Record<string, NonNullable<ReturnType<typeof locate>>> = {};
+      const put = (k: string, v: string | number | null | undefined) => { const b = locate(t, v); if (b) boxes[k] = b; };
+      put('invoiceNo', out.invoiceNo); put('supplier.gstin', out.supplier.gstin); put('buyer.gstin', out.buyer.gstin); put('supplier.name', out.supplier.name);
+      out.extraction.boxes = boxes;
+      out.extraction.pageSize = t.pageSize;
+    }
+    out.extraction.model = provider.label;
+    if (out.irn || lookupRegistry(out.supplier.gstin)?.einvoiceMandated) {
+      (out as Invoice).qr = await checkEinvoiceQr(inv.source.file!, isPdf ? 'pdf' : 'image').catch(() => undefined);
+    }
+    return out;
+  };
+
+  // Reads started ahead of time (sample scans are read in the background as soon as the
+  // sample loads), so pressing "Read scan" usually shows the result instantly.
+  const reads = useRef(new Map<string, Promise<Awaited<ReturnType<typeof aiRead>>>>());
+  const startRead = (inv: Invoice, provider: AiProvider) => {
+    let r = reads.current.get(inv.id);
+    if (!r) {
+      r = aiRead(inv, provider);
+      r.catch(() => reads.current.delete(inv.id)); // a failed read can be retried
+      reads.current.set(inv.id, r);
+    }
+    return r;
+  };
+  useEffect(() => {
+    if (!ws?.sample || !ai) return;
+    for (const inv of ws.invoices) if (inv.extraction.method === 'pending' && inv.source.file) void startRead(inv, ai).catch(() => undefined);
+  }, [ws?.sample, ws?.invoices.length, ai]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /** For the sample, the jury should never wait long: after this, the bundled transcription is shown (clearly labelled). */
+  const SAMPLE_WAIT_MS = 4000;
+
   const extractWithAi = useCallback(async (inv: Invoice) => {
     const provider = ai ?? (await refreshAi());
-    if (!provider) { flash('Connect an AI provider in Settings to read scans.'); return false; }
+    if (!provider) {
+      if (hasRefFor(inv)) { applyRefFor(inv, 'Reference transcription bundled with the sample, used because no AI provider is connected.'); return true; }
+      flash('Connect an AI provider in Settings to read scans.'); return false;
+    }
     if (!inv.source.file) return false;
     setBusy(`Reading ${inv.source.fileName} with ${provider.label}`);
     try {
-      const isPdf = inv.source.kind === 'pdf';
-      const images = isPdf ? await pdfToImages(inv.source.file) : [inv.source.file];
-      const t = texts.current.get(inv.id) ?? null;
-      const textLayer = t && t.items.length > 15 ? t.items.map((i) => i.str).join(' ') : null;
-      const out = await extractInvoice(provider, provider.canSeeImages ? images : [], textLayer);
-      if (t) {
-        const boxes: Record<string, NonNullable<ReturnType<typeof locate>>> = {};
-        const put = (k: string, v: string | number | null | undefined) => { const b = locate(t, v); if (b) boxes[k] = b; };
-        put('invoiceNo', out.invoiceNo); put('supplier.gstin', out.supplier.gstin); put('buyer.gstin', out.buyer.gstin); put('supplier.name', out.supplier.name);
-        out.extraction.boxes = boxes;
-        out.extraction.pageSize = t.pageSize;
-      }
-      out.extraction.model = provider.label;
-      if (out.irn || lookupRegistry(out.supplier.gstin)?.einvoiceMandated) {
-        (out as Invoice).qr = await checkEinvoiceQr(inv.source.file, isPdf ? 'pdf' : 'image').catch(() => undefined);
+      const read = startRead(inv, provider);
+      const out = hasRefFor(inv)
+        ? await Promise.race([read, new Promise<null>((res) => window.setTimeout(() => res(null), SAMPLE_WAIT_MS))])
+        : await read;
+      if (!out) {
+        applyRefFor(inv, `${provider.label} is still reading this scan, so the bundled transcription of this sample is shown to save time.`);
+        flash('Showing the bundled transcription so you do not have to wait.');
+        return true;
       }
       replaceInvoice(inv.id, out);
       flash(`Extracted ${out.items.length} line items from ${inv.source.fileName}`);
@@ -226,7 +263,7 @@ export function useWorkspace() {
       flash(describeAiError(e));
       return false;
     } finally { setBusy(null); }
-  }, [ai, refreshAi, flash]);
+  }, [ai, refreshAi, flash]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const hasRefFor = (inv: Invoice) => Object.keys(refs.current ?? {}).some((k) => k.endsWith(inv.source.fileName));
   const applyRefFor = (inv: Invoice, note: string) => {

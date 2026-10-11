@@ -10,6 +10,9 @@ export function Missions({ a, onShow, open, setOpen, onUpload }: { a: Analysis; 
   const [done, setDone] = useState<MissionId[]>(loadDone);
   const [flash, setFlash] = useState<Mission | null>(null);
   const timer = useRef(0);
+  const openTimer = useRef(0);
+  const setOpenRef = useRef(setOpen);
+  setOpenRef.current = setOpen;
 
   useEffect(() => {
     const on = (e: Event) => {
@@ -21,7 +24,10 @@ export function Missions({ a, onShow, open, setOpen, onUpload }: { a: Analysis; 
         const m = MISSIONS.find((x) => x.id === id)!;
         setFlash(m);
         window.clearTimeout(timer.current);
-        timer.current = window.setTimeout(() => setFlash(null), 4200);
+        timer.current = window.setTimeout(() => setFlash(null), 6000);
+        // Open the checklist on its own so the next mission is one click away.
+        window.clearTimeout(openTimer.current);
+        openTimer.current = window.setTimeout(() => setOpenRef.current(true), 700);
         return next;
       });
     };
@@ -56,6 +62,12 @@ export function Missions({ a, onShow, open, setOpen, onUpload }: { a: Analysis; 
             </div>
             <button className="btn ghost sm" onClick={() => setOpen(false)} aria-label="Minimise missions"><Icon.x /></button>
           </header>
+          {flash && !all && (
+            <div className="mission-just-done" role="status">
+              <span className="mf-check"><Icon.check /></span>
+              <div><b>Done: {flash.title}</b><span>Next one is highlighted below. Press “Show me”.</span></div>
+            </div>
+          )}
           {all ? (
             <div className="mission-done-all">
               <p>You found <b>{formatINRCompact(a.totals.itcAtRisk)}</b> of stuck GST across {a.totals.invoices} bills, saw why, and know what to file. That is the whole job, done in minutes.</p>

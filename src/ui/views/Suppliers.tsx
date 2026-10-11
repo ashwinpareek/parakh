@@ -77,15 +77,19 @@ function FollowUpPanel({ a, api, gstin, go }: { a: Analysis; api: WorkspaceApi; 
   }));
 
   const generate = async () => {
+    // Show a complete draft instantly from the template, then let AI polish it in the background.
+    const vend = { name: vendor.name, gstin };
+    setDraft(templateFollowUpLang(a.company, vend, payload, lang, templateFollowUp(a.company, vend, payload)));
+    completeMission('followup');
+    if (!api.ai) { setNote('Written from a template because AI is not connected in this view.'); return; }
     setWorking(true);
-    setNote(null);
+    setNote(`Ready to send. ${api.ai.label} is polishing the wording…`);
     try {
-      if (!api.ai) throw Object.assign(new Error('no ai'), { code: 'none' });
-      setDraft(await draftFollowUp(api.ai, a.company, { name: vendor.name, gstin }, payload, lang));
+      setDraft(await draftFollowUp(api.ai, a.company, vend, payload, lang));
+      setNote(`Polished by ${api.ai.label}.`);
     } catch (e) {
-      setDraft(templateFollowUpLang(a.company, { name: vendor.name, gstin }, payload, lang, templateFollowUp(a.company, { name: vendor.name, gstin }, payload)));
-      setNote((e as { code?: string }).code === 'none' ? 'Written from a template because AI is not connected in this view.' : `${describeAiError(e)} Showing the template version.`);
-    } finally { setWorking(false); completeMission('followup'); }
+      setNote(`${describeAiError(e)} Showing the template version.`);
+    } finally { setWorking(false); }
   };
 
   const text = draft ? (mode === 'email' ? `Subject: ${draft.subject}\n\n${draft.email}` : draft.whatsapp) : '';

@@ -48,6 +48,9 @@ export default function App() {
   const [welcome, setWelcome] = useState(() => { try { return sessionStorage.getItem(ONBOARD_KEY) !== '1'; } catch { return true; } });
   const [missionsOpen, setMissionsOpen] = useState(false);
   const [spot, setSpot] = useState<Mission | null>(null);
+  // If a mission finishes while its spotlight is still showing, open the checklist once the spotlight closes.
+  const [openAfterSpot, setOpenAfterSpot] = useState(false);
+  useEffect(() => { if (!spot && openAfterSpot) { setMissionsOpen(true); setOpenAfterSpot(false); } }, [spot, openAfterSpot]);
   const finishWelcome = ({ action, mode: m }: { action: WelcomeAction; mode: Mode }) => {
     try { sessionStorage.setItem(ONBOARD_KEY, '1'); } catch { /* storage unavailable */ }
     setMode(m);
@@ -166,7 +169,7 @@ export default function App() {
       {api.toast && <div className="toast" role="status">{api.toast}</div>}
       {a && tour != null && <Tour a={a} step={tour} setStep={setTour} go={go} />}
       {a && spot && <Tour a={a} steps={[spot.spotlight]} step={0} finishLabel="Got it" setStep={() => { if (spot.id === 'stuck') completeMission('stuck'); setSpot(null); }} go={go} />}
-      {a && !welcome && <Missions a={a} open={missionsOpen} setOpen={setMissionsOpen} onUpload={() => setModal('new')} onShow={(m) => { setMissionsOpen(false); setSpot(m); }} />}
+      {a && !welcome && <Missions a={a} open={missionsOpen} setOpen={(v) => { if (v && spot) setOpenAfterSpot(true); else setMissionsOpen(v); }} onUpload={() => setModal('new')} onShow={(m) => { setMissionsOpen(false); setSpot(m); }} />}
       {welcome && <Welcome a={a} onDone={finishWelcome} />}
     </div>
     </ModeContext.Provider>
