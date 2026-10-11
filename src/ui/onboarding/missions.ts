@@ -47,12 +47,15 @@ export const MISSIONS: Mission[] = [
   },
 ];
 
-const KEY = 'parakh.missions.v1';
+// Missions restart with every visit, like the intro: progress lives only for this page load.
+// (Older builds saved progress in localStorage; clear it so returning visitors start fresh.)
+try { localStorage.removeItem('parakh.missions.v1'); } catch { /* storage unavailable */ }
+let doneThisVisit: MissionId[] = [];
 export function loadDone(): MissionId[] {
-  try { return JSON.parse(localStorage.getItem(KEY) ?? '[]'); } catch { return []; }
+  return [...doneThisVisit];
 }
 export function saveDone(ids: MissionId[]) {
-  try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch { /* storage unavailable */ }
+  doneThisVisit = [...ids];
 }
 
 /** Fire from anywhere in the app when the user does something a mission teaches. */
