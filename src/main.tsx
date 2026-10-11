@@ -1,6 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './ui/App';
+import '@fontsource-variable/instrument-sans/index.css';
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/tiro-devanagari-hindi/400.css';
 import './styles.css';
 
 createRoot(document.getElementById('root')!).render(

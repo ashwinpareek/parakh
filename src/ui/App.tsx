@@ -122,14 +122,14 @@ export default function App() {
           <div><div className="brand-name">Parakh</div><div className="brand-sub">GST bill checker</div></div>
         </div>
         <nav className="nav" aria-label="Main">
-          <div className="nav-label">Workspace</div>
+          <div className="nav-label">This month</div>
           {nav.map((n) => (
             <button key={n.id} aria-current={current === n.id ? 'page' : undefined} onClick={() => go({ view: n.id } as Route)} disabled={!a}>
               <n.icon /> {n.label}
               {n.count != null && <span className="count">{n.count}</span>}
             </button>
           ))}
-          <div className="nav-label" style={{ marginTop: 14 }}>Understand</div>
+          <div className="nav-label" style={{ marginTop: 18 }}>Help</div>
           {nav2.map((n) => (
             <button key={n.id} aria-current={current === n.id ? 'page' : undefined} onClick={() => go({ view: n.id } as Route)} disabled={!a}>
               <n.icon /> {n.label}

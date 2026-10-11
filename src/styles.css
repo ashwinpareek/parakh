@@ -2,58 +2,64 @@
    Brand gold appears only in the mark; teal is the action colour; red/orange/amber are reserved for severity. */
 :root {
   color-scheme: light;
-  --bg: #f2f3ef;
+  /* Paper: a cool bone white, so the money and the stone carry the colour. */
+  --bg: #f3f4f0;
   --surface: #ffffff;
-  --surface-2: #f7f8f5;
-  --surface-3: #eef0eb;
-  --line: #e0e3dc;
-  --line-strong: #c9cec4;
-  --ink: #14181b;
-  --ink-2: #4a5257;
-  --ink-3: #788187;
-  --side-bg: #171b1e;
-  --side-2: #20262a;
-  --side-ink: #d3d8d4;
-  --side-dim: #8a938f;
-  --gold: #c99b3b;
-  --accent: #0d6b5b;
-  --accent-hover: #0a5a4c;
+  --surface-2: #f8f9f6;
+  --surface-3: #eef0ea;
+  --line: #e3e6df;
+  --line-strong: #cfd4cb;
+  --ink: #101a17;
+  --ink-2: #47524d;
+  --ink-3: #7b857f;
+  /* Stone: the touchstone the gold is tested on. */
+  --side-bg: #0f1c19;
+  --side-2: #172723;
+  --side-ink: #cfd8d3;
+  --side-dim: #81908a;
+  /* Assay gold: only where something has passed the test. */
+  --gold: #b88a2e;
+  --gold-bright: #dcb35c;
+  --accent: #0f5c4c;
+  --accent-hover: #0b4a3d;
   --accent-ink: #ffffff;
-  --accent-soft: #e2efeb;
-  --crit: #b3322a;
-  --crit-soft: #fbe9e6;
-  --high: #c05a17;
-  --high-soft: #fcede1;
-  --med: #9a7410;
-  --med-soft: #f9f1dc;
-  --low: #5a646c;
-  --low-soft: #edf0f2;
-  --ok: #2c7a45;
-  --ok-soft: #e4f2e8;
-  --info: #2b5aa6;
-  --info-soft: #e6edf8;
-  --hl: rgba(201, 155, 59, 0.28);
-  --shadow: 0 1px 2px rgba(20, 24, 27, 0.06), 0 4px 16px rgba(20, 24, 27, 0.05);
-  --shadow-lg: 0 12px 48px rgba(20, 24, 27, 0.18);
+  --accent-soft: #e3efea;
+  --crit: #b4382e;
+  --crit-soft: #fbeae7;
+  --high: #b9561b;
+  --high-soft: #fcede2;
+  --med: #94700f;
+  --med-soft: #f8f0da;
+  --low: #5b6660;
+  --low-soft: #eef1ee;
+  --ok: #26754a;
+  --ok-soft: #e3f1e8;
+  --info: #2c5a9e;
+  --info-soft: #e7eef8;
+  --hl: rgba(184, 138, 46, 0.26);
+  --shadow: 0 1px 1px rgba(16, 26, 23, 0.03), 0 2px 6px rgba(16, 26, 23, 0.04), 0 12px 32px -12px rgba(16, 26, 23, 0.08);
+  --shadow-lg: 0 24px 64px -16px rgba(16, 26, 23, 0.28), 0 2px 6px rgba(16, 26, 23, 0.06);
 
-  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Instrument Sans Variable', 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-  --font-cond: 'IBM Plex Sans Condensed', 'IBM Plex Sans', 'Arial Narrow', sans-serif;
+  --font-cond: 'Instrument Sans Variable', 'Instrument Sans', system-ui, sans-serif;
+  --font-money: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
 
-  --r-sm: 4px;
-  --r: 6px;
-  --r-lg: 10px;
-  --side-w: 232px;
+  --r-sm: 5px;
+  --r: 8px;
+  --r-lg: 14px;
+  --side-w: 244px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 /* Light is the default on every system; dark applies only when chosen in Settings. */
 :root[data-theme='dark'] {
-  --bg: #0f1214; --surface: #161a1d; --surface-2: #1b2023; --surface-3: #22282c; --line: #2a3035; --line-strong: #3a4248;
-  --ink: #e8ecea; --ink-2: #aab3b0; --ink-3: #7f8986; --side-bg: #0b0d0f; --side-2: #161a1d; --side-ink: #d3d8d4; --side-dim: #7f8986;
-  --accent: #3db59b; --accent-hover: #55c6ad; --accent-ink: #062520; --accent-soft: #14302a;
+  --bg: #0c1311; --surface: #131c19; --surface-2: #17211e; --surface-3: #1e2a26; --line: #24312c; --line-strong: #34433d;
+  --ink: #e9eeeb; --ink-2: #aab6b0; --ink-3: #7d8a84; --side-bg: #08100e; --side-2: #121c19; --side-ink: #cfd8d3; --side-dim: #7d8a84;
+  --accent: #46b89c; --accent-hover: #5ccaaf; --accent-ink: #04201a; --accent-soft: #143029;
+  --gold: #d6ac55; --gold-bright: #e8c574;
   --crit: #f07a6f; --crit-soft: #3a1d1a; --high: #f19b58; --high-soft: #392614; --med: #e0bd58; --med-soft: #312810;
-  --low: #9aa5ae; --low-soft: #22282d; --ok: #62c483; --ok-soft: #16301f; --info: #7ea8f2; --info-soft: #1a2740;
-  --hl: rgba(224, 189, 88, 0.3); --shadow: 0 1px 2px rgba(0, 0, 0, 0.4); --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.6);
+  --low: #9aa5ae; --low-soft: #212a27; --ok: #62c483; --ok-soft: #15301f; --info: #7ea8f2; --info-soft: #1a2740;
+  --hl: rgba(224, 189, 88, 0.3); --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.5); --shadow-lg: 0 24px 64px -16px rgba(0, 0, 0, 0.7);
   color-scheme: dark;
 }
 
@@ -811,3 +817,142 @@ kbd { font: 500 10.5px/1 var(--font-mono); padding: 3px 5px; border-radius: 4px;
 .pv-row.device .pv-tag { background: var(--ok-soft); color: var(--ok); }
 .pv-row.ai .pv-tag { background: var(--info-soft); color: var(--info); }
 .rec-tip { padding: 10px 16px; font-size: 12.5px; color: var(--ink-2); border-top: 1px solid var(--line); background: var(--surface-2); }
+
+/* =====================================================================================
+   Premium layer — "touchstone and ledger".
+   The stone (sidebar) is where gold is tested; gold marks only what has passed.
+   Rupee figures are set like engraved numerals; everything else stays quiet.
+   ===================================================================================== */
+body { font: 400 14px/1.55 var(--font-sans); letter-spacing: -0.003em; text-rendering: optimizeLegibility; }
+h1, h2, h3, h4 { letter-spacing: -0.018em; }
+::selection { background: var(--hl); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+* { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+
+/* labels in sentence case, not shouted */
+.eyebrow { font: 500 12px/1.3 var(--font-sans); text-transform: none; letter-spacing: 0; color: var(--ink-3); }
+.t th { font: 500 12px/1.2 var(--font-sans); text-transform: none; letter-spacing: 0; color: var(--ink-3); background: var(--surface); padding: 11px 14px; }
+.cb-group { font: 500 12px/1 var(--font-sans); text-transform: none; letter-spacing: 0; }
+.pv-tag { text-transform: none; letter-spacing: 0; font: 600 11.5px/1.3 var(--font-sans); }
+.ws-tag { text-transform: none; letter-spacing: 0; font-size: 11px; }
+.tl-today span { text-transform: none; letter-spacing: 0; font: 600 11.5px/1 var(--font-sans); }
+.mb-stamp { text-transform: none; letter-spacing: 0; }
+
+/* --- the stone --------------------------------------------------------------------- */
+.side {
+  background:
+    radial-gradient(140% 50% at 0% 0%, rgba(184, 138, 46, 0.09), transparent 55%),
+    radial-gradient(120% 40% at 100% 100%, rgba(70, 184, 156, 0.06), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    var(--side-bg);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 22px 14px 16px; gap: 22px;
+}
+.brand { gap: 11px; padding: 2px 8px 6px; }
+.brand-name { font: 400 26px/1 var(--font-money); letter-spacing: 0; color: #f6f1e4; }
+.brand-sub { font-size: 11.5px; letter-spacing: 0; margin-top: 4px; color: var(--side-dim); }
+.nav { gap: 1px; }
+.nav-label { font: 500 11.5px/1 var(--font-sans); text-transform: none; letter-spacing: 0; color: color-mix(in srgb, var(--side-dim) 80%, transparent); padding: 0 12px 8px; }
+.nav button { position: relative; padding: 8px 12px; border-radius: 8px; font-size: 13.5px; color: color-mix(in srgb, var(--side-ink) 88%, transparent); transition: background 0.15s, color 0.15s; }
+.nav button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.045); color: #fff; }
+.nav button[aria-current='page'] { background: linear-gradient(90deg, rgba(220, 179, 92, 0.12), rgba(255, 255, 255, 0.04) 70%); color: #fff; }
+.nav button[aria-current='page']::before { content: ''; position: absolute; left: -14px; top: 8px; bottom: 8px; width: 3px; border-radius: 0 3px 3px 0; background: linear-gradient(var(--gold-bright), var(--gold)); }
+.nav button[aria-current='page'] svg { color: var(--gold-bright); opacity: 1; }
+.nav button .count { font: 500 11px/1 var(--font-mono); color: var(--side-dim); background: rgba(255, 255, 255, 0.05); padding: 3px 6px; border-radius: 99px; }
+.nav button[aria-current='page'] .count { color: var(--gold-bright); background: rgba(220, 179, 92, 0.12); }
+.nav button:disabled { opacity: 0.45; cursor: default; }
+.side-foot { gap: 6px; }
+.side-foot .btn.primary { height: 38px; border-radius: 10px; background: linear-gradient(180deg, #e2bd6a, #c39237); border-color: #b88a2e; color: #1c1405; font-weight: 600; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 18px -6px rgba(220, 179, 92, 0.45); }
+.side-foot .btn.primary:hover { background: linear-gradient(180deg, #e8c574, #c9993e); }
+.ai-status { border-radius: 10px; background: rgba(255, 255, 255, 0.035); border-color: rgba(255, 255, 255, 0.06); }
+.side-link { padding: 5px 12px; border-radius: 6px; font-size: 12.5px; }
+
+/* --- the paper --------------------------------------------------------------------- */
+.topbar { padding: 12px 36px; min-height: 60px; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom-color: color-mix(in srgb, var(--line) 70%, transparent); }
+.crumbs { font-size: 13px; }
+.page { padding: 28px 36px 120px; gap: 24px; }
+.page-head h1 { font-size: 27px; line-height: 1.2; letter-spacing: -0.028em; font-weight: 600; }
+.page-head .meta { font-size: 13.5px; line-height: 1.55; max-width: 76ch; color: var(--ink-2); margin-top: 8px; }
+
+.card { border-color: var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+.card-h { padding: 18px 20px 12px; }
+.card-h h2 { font-size: 15px; letter-spacing: -0.012em; }
+.card-b { padding: 0 20px 20px; }
+.callout { border-radius: var(--r-lg); padding: 14px 16px; }
+.page-hint { border-radius: var(--r-lg); background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 14%, transparent); }
+
+.btn { height: 34px; padding: 0 14px; border-radius: var(--r); border-color: var(--line-strong); box-shadow: 0 1px 1px rgba(16, 26, 23, 0.04); font-size: 13.5px; transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
+.btn:hover:not(:disabled) { border-color: color-mix(in srgb, var(--ink-3) 70%, var(--line-strong)); background: var(--surface); box-shadow: 0 2px 6px rgba(16, 26, 23, 0.07); }
+.btn:active:not(:disabled) { transform: translateY(0.5px); }
+.btn.primary { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 88%, #fff), var(--accent)); border-color: var(--accent-hover); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 1px 2px rgba(15, 92, 76, 0.28), 0 6px 16px -8px rgba(15, 92, 76, 0.5); }
+.btn.primary:hover:not(:disabled) { background: linear-gradient(180deg, var(--accent), var(--accent-hover)); border-color: var(--accent-hover); }
+.btn.ghost { box-shadow: none; }
+.btn.ghost:hover:not(:disabled) { box-shadow: none; background: var(--surface-3); border-color: transparent; }
+.btn.sm { height: 28px; padding: 0 10px; font-size: 12.5px; border-radius: 7px; }
+.btn.wa { background: linear-gradient(180deg, #25a55c, #1b8d4c); border-color: #188046; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 2px rgba(24, 128, 70, 0.3); }
+.input, select.input { height: 34px; border-radius: var(--r); border-color: var(--line-strong); transition: border-color 0.15s, box-shadow 0.15s; }
+.input:focus { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+.seg { border-radius: var(--r); background: var(--surface-3); border-color: var(--line); padding: 2px; gap: 2px; }
+.seg button { border-radius: 6px; background: transparent; height: 26px; padding: 0 11px; font-weight: 500; }
+.seg button + button { border-left: 0; }
+.seg button[aria-pressed='true'] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(16, 26, 23, 0.12), 0 0 0 1px var(--line); }
+.pill { height: 22px; padding: 0 9px; font-size: 12px; }
+.tabs button { font-size: 13.5px; padding: 10px 14px; }
+.tabs button[aria-selected='true'] { border-bottom-color: var(--ink); }
+
+.t td { padding: 12px 14px; }
+.t tbody tr.click:hover td { background: color-mix(in srgb, var(--accent-soft) 35%, var(--surface)); }
+.finding { border-radius: 12px; transition: border-color 0.15s, box-shadow 0.15s; }
+.finding:hover { border-color: var(--line-strong); box-shadow: var(--shadow); }
+.finding .fix::before { content: ''; width: 6px; height: 6px; margin-top: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+.ok-box { border-radius: 12px; }
+.msg-box { border-radius: 10px; }
+
+/* --- engraved money ---------------------------------------------------------------- */
+.fig .value, .ims-cell .n, .deadline .days, .rec-big, .rec-stats b {
+  font-family: var(--font-money); font-weight: 400; letter-spacing: -0.01em; font-variant-numeric: lining-nums tabular-nums;
+}
+.fig .value { font-size: 44px; line-height: 1; margin-top: 8px; }
+.fig .label { font-size: 12.5px; }
+.ims-cell .n { font-size: 38px; line-height: 1; }
+.deadline .days { font-size: 32px; }
+.rec-big { font-size: 48px; line-height: 1.05; }
+.rec-big .muted { font-family: var(--font-sans); font-size: 14px; letter-spacing: 0; }
+.rec-stats b { font-size: 26px; line-height: 1.1; }
+.ledger { padding: 22px 22px 18px; gap: 18px; }
+.ledger-figs { gap: 24px; }
+.ledger-figs .fig + .fig { border-left: 1px solid var(--line); padding-left: 24px; }
+.ledger-bar { height: 10px; border-radius: 99px; }
+.leak-track { height: 7px; border-radius: 99px; }
+.leak-fill { border-radius: 99px; background: linear-gradient(90deg, color-mix(in srgb, var(--crit) 75%, #fff), var(--crit)); }
+.rec-hero { background: radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--gold) 9%, transparent), transparent 55%), var(--surface); }
+.rec-bar span { background: linear-gradient(90deg, var(--accent), var(--gold)); }
+.rec-ring { background: conic-gradient(var(--gold) calc(var(--p) * 1%), var(--surface-3) 0); }
+.rec-stats > div { border-radius: 12px; padding: 12px 14px; }
+.rt-icon { background: linear-gradient(160deg, #1d3b34, var(--side-bg)); color: var(--gold-bright); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+
+/* --- overlays ---------------------------------------------------------------------- */
+.scrim { background: rgba(10, 18, 16, 0.38); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.modal { border-radius: 18px; border: 1px solid var(--line); }
+.modal-h { padding: 18px 22px; }
+.modal-b { padding: 20px 22px; }
+.toast { background: var(--side-bg); color: #f3efe4; border: 1px solid rgba(220, 179, 92, 0.25); border-radius: 12px; box-shadow: var(--shadow-lg); padding: 11px 18px; }
+.cb { border-radius: 18px; }
+.cmd-btn { border-radius: 10px; background: var(--surface); box-shadow: 0 1px 1px rgba(16, 26, 23, 0.04); height: 34px; }
+
+@media (max-width: 760px) {
+  .page { padding: 20px 16px 120px; }
+  .topbar { padding: 10px 16px; }
+  .fig .value { font-size: 34px; }
+  .ledger-figs .fig + .fig { border-left: 0; padding-left: 0; }
+  .rec-big { font-size: 38px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+/* premium layer: refinements after review */
+.page-head h1 { letter-spacing: -0.018em; }
+.bi-word { font: 400 clamp(60px, 9vw, 104px)/1 var(--font-money); letter-spacing: -0.01em; }
+@media (max-width: 900px) {
+  .nav button[aria-current='page']::before { left: 10px; right: 10px; top: auto; bottom: -1px; width: auto; height: 2px; border-radius: 2px; }
+  .side { padding: 0 12px; gap: 12px; }
+  .brand-name { font-size: 22px; }
+}

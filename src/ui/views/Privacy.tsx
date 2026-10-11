@@ -25,7 +25,7 @@ export function Privacy({ onClose, aiOn }: { onClose: () => void; aiOn: boolean 
               </div>
             ))}
           </div>
-          <p className="muted" style={{ fontSize: 12 }}>AI is {aiOn ? 'available' : 'currently off'} here. With AI off, every check, the reconciliation and the recovery plan still work. The practice data’s sample scan is read ahead of time to save waiting; your own bills never are. Fonts are loaded from Google Fonts.</p>
+          <p className="muted" style={{ fontSize: 12 }}>AI is {aiOn ? 'available' : 'currently off'} here. With AI off, every check, the reconciliation and the recovery plan still work. The practice data’s sample scan is read ahead of time to save waiting; your own bills never are.</p>
         </div>
       </div>
     </div>
